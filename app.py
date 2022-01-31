@@ -1,5 +1,6 @@
 import streamlit as st
 from apps.descriptions import inicio, sobre
+from apps.orbitais import orbital
 
 #CONFIGURANDO O STREAMLIT:
 #- Passando o título da página;
@@ -15,12 +16,16 @@ initial_sidebar_state="expanded")
 # - Inserindo título;
 # - Inserindo botões de navegação;
 st.sidebar.title("Navegação")
-aplicacoes = ["Início", "Sobre"]
+aplicacoes = ["Início", "Imagens Landsat", "Sobre"]
 selecao = st.sidebar.radio("Ir para: ", aplicacoes)
 
 # INÍCIO
 if selecao == "Início":
     inicio(selecao)
+
+# IMAGEM LANDSAT
+if selecao == "Imagens Landsat":
+    orbital(selecao)
 
 # SOBRE
 if selecao == "Sobre":
