@@ -1,4 +1,5 @@
 import streamlit as st
+from apps.descriptions import inicio, sobre
 
 #CONFIGURANDO O STREAMLIT:
 #- Passando o título da página;
@@ -14,6 +15,15 @@ initial_sidebar_state="expanded")
 # - Inserindo título;
 # - Inserindo botões de navegação;
 st.sidebar.title("Navegação")
-aplications = ["Teste", "Sobre"]
-st.sidebar.radio("Ir para: ", aplications)
+aplicacoes = ["Início", "Sobre"]
+selecao = st.sidebar.radio("Ir para: ", aplicacoes)
+
+# INÍCIO
+if selecao == "Início":
+    inicio(selecao)
+
+# SOBRE
+if selecao == "Sobre":
+    sobre(selecao)
+
 
