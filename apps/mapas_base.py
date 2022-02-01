@@ -16,15 +16,7 @@ def reservatorios(titulo):
     st.markdown("----")
     st.markdown("Nesta seção é possível encontrar uma análise temporal dos reservatórios da região de Curitiba.")
     row1_col1, row1_col2 = st.columns([2, 1])
-    # m = geemap.Map(
-    # plugin_Draw=True,
-    # draw_export=True,
-    # locate_control=True,
-    # plugin_LatLngPopup=False,)
-    # m.setCenter(-49.232055346903806, -25.448467407922067, 17)
-    # # m.split_map(left_layer='HYBRID', right_layer='ESRI')
-    # # m.add_landsat_ts_gif(label='Place name', start_year=1985, bands=['NIR', 'Red', 'Green'], frames_per_second=5)
-    # m.addLayerControl()
+
     with row1_col2:
         local = st.selectbox("Selecione o local para visualização: ", ("Represa do Iraí", "Represa do Passaúna", "Piraquara I", "Piraquara II"))
         if local == "Represa do Iraí":
