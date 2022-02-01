@@ -1,6 +1,6 @@
 import streamlit as st
 from apps.descriptions import inicio, sobre
-from apps.orbitais import orbital
+from apps.mapas_base import reservatorios
 
 #CONFIGURANDO O STREAMLIT:
 #- Passando o título da página;
@@ -16,16 +16,16 @@ initial_sidebar_state="expanded")
 # - Inserindo título;
 # - Inserindo botões de navegação;
 st.sidebar.title("Navegação")
-aplicacoes = ["Início", "Imagens Landsat", "Sobre"]
+aplicacoes = ["Início", "Reservatórios de água", "Sobre"]
 selecao = st.sidebar.radio("Ir para: ", aplicacoes)
 
 # INÍCIO
 if selecao == "Início":
     inicio(selecao)
 
-# IMAGEM LANDSAT
-if selecao == "Imagens Landsat":
-    orbital(selecao)
+# RESERVATÓRIOS DE ÁGUA
+if selecao == "Reservatórios de água":
+    reservatorios(selecao)
 
 # SOBRE
 if selecao == "Sobre":
