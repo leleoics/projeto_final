@@ -1,4 +1,5 @@
 import streamlit as st
+from io import StringIO
 
 
 def inicio(titulo):

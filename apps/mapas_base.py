@@ -3,6 +3,7 @@ import streamlit as st
 import geemap.foliumap as geemap
 import folium
 import ee
+from io import StringIO
 
 
 def folium_static(fig, width=700, height=500):
