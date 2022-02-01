@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import streamlit.components.v1 as components
 import streamlit as st
 import geemap.foliumap as geemap
