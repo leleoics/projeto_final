@@ -4,6 +4,7 @@ import geemap.foliumap as geemap
 import folium
 import ee
 
+
 def folium_static(fig, width=700, height=500):
     if isinstance(fig, folium.Map):
         fig = folium.Figure().add_child(fig)
