@@ -4,8 +4,9 @@ from apps.mapas_base import reservatorios
 import ee
 
 
-credentials_json_path = "./data/credentials.json"
-
+service_account = "projetofinal@projetofinal-340114.iam.gserviceaccount.com"
+key_path = "./data/projetofinal-340114-5db12cbc8740.json"
+credentials = ee.ServiceAccountCredentials(service_account, key_path)
 ee.Initialize()
 
 #CONFIGURANDO O STREAMLIT:
