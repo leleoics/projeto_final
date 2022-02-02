@@ -1,10 +1,13 @@
 import streamlit as st
 from apps.descriptions import inicio, sobre
 from apps.mapas_base import reservatorios
-from io import StringIO
 import ee
 
+
+credentials_json_path = "./data/credentials.json"
+
 ee.Initialize()
+
 #CONFIGURANDO O STREAMLIT:
 #- Passando o título da página;
 #- Ícone;
