@@ -1,6 +1,4 @@
 earthengine-api==0.1.296
-ee==0.2
-ee-extra==0.0.10
 folium==0.12.1.post1
 geeadd==0.5.5
 geemap==0.11.1

@@ -2,7 +2,6 @@ import streamlit.components.v1 as components
 import streamlit as st
 import geemap.foliumap as geemap
 import folium
-import ee
 
 
 def folium_static(fig, width=700, height=500):
@@ -12,7 +11,6 @@ def folium_static(fig, width=700, height=500):
 
 
 def reservatorios(titulo):
-    ee.Initialize()
     st.title(titulo)
     st.markdown("----")
     st.markdown("Nesta seção é possível encontrar uma análise temporal dos reservatórios da região de Curitiba.")
