@@ -7,7 +7,7 @@ import ee
 service_account = "projetofinal@projetofinal-340114.iam.gserviceaccount.com"
 key_path = "./data/projetofinal-340114-5db12cbc8740.json"
 credentials = ee.ServiceAccountCredentials(service_account, key_path)
-ee.Initialize()
+ee.Initialize(credentials)
 
 #CONFIGURANDO O STREAMLIT:
 #- Passando o título da página;
