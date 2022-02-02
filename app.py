@@ -2,8 +2,9 @@ import streamlit as st
 from apps.descriptions import inicio, sobre
 from apps.mapas_base import reservatorios
 from io import StringIO
+import ee
 
-
+ee.Initialize()
 #CONFIGURANDO O STREAMLIT:
 #- Passando o título da página;
 #- Ícone;
