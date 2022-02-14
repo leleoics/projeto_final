@@ -1,8 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "piraquaraII",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "nome": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ -49.023431575823054, -25.511238514616426 ], [ -49.044311558438103, -25.540061968878508 ], [ -49.104568464789139, -25.497280700150935 ], [ -49.082780656842999, -25.467322464224999 ], [ -49.023431575823054, -25.511238514616426 ] ] ] ] } }
-]
-}

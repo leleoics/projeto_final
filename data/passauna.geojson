@@ -1,8 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "passauna",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "nome": "Passaúna" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ -49.398411350893504, -25.542749448672843 ], [ -49.398411350893504, -25.446066050911845 ], [ -49.360282686987759, -25.446066050911845 ], [ -49.360282686987759, -25.542749448672843 ], [ -49.398411350893504, -25.542749448672843 ] ] ] ] } }
-]
-}

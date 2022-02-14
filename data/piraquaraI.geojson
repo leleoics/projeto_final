@@ -1,8 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "piraquaraI",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "nome": "Piraquara I" }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ -49.034892870628042, -25.502160261305541 ], [ -49.010665282104604, -25.520033072511357 ], [ -48.97669618744397, -25.473986077526945 ], [ -49.000923775967408, -25.456113266321129 ], [ -49.034892870628042, -25.502160261305541 ] ] ] ] } }
-]
-}
