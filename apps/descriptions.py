@@ -1,5 +1,7 @@
 import streamlit as st
 from PIL import Image
+import time
+import streamlit.components.v1 as components
 
 logo_ee = Image.open("./data/brand_ee.png")
 logo_ufpr = Image.open("./data/brand_ufpr.png")
@@ -7,9 +9,9 @@ logo_streamlit = Image.open("./data/brand_streamlit.png")
 logo_github = Image.open("./data/brand_github.png")
 logo_cartografica = Image.open("./data/brand_cartografica.png")
 
-
 def inicio(titulo):
     st.title(titulo)
+
     st.markdown("----")
     st.info("""
     Esta é uma aplicação em desenvolvimento como projeto final do curso de Engenharia Cartografica e de Agrimensura 
