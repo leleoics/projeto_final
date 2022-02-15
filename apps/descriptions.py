@@ -1,14 +1,19 @@
-from turtle import width
 import streamlit as st
 from PIL import Image
+import base64
 
 logo_ee = Image.open("./data/brand_ee.png")
 logo_ufpr = Image.open("./data/brand_ufpr.png")
 logo_streamlit = Image.open("./data/brand_streamlit.png")
 logo_github = Image.open("./data/brand_github.png")
 logo_cartografica = Image.open("./data/brand_cartografica.png")
-video_file = open('./data/serie_historica/serie_historica.mp4', 'rb')
-video_bytes = video_file.read()
+
+"""### gif from local file"""
+file_ = open("./data/serie_historica/serie_historica.gif", "rb")
+contents = file_.read()
+data_url = base64.b64encode(contents).decode("utf-8")
+file_.close()
+
 
 
 def inicio(titulo):
@@ -18,7 +23,10 @@ def inicio(titulo):
     Esta é uma aplicação em desenvolvimento como projeto final do curso de Engenharia Cartografica e de Agrimensura 
     da Universidade Federal do Paraná.   
             """)
-    st.video(video_bytes, start_time=0)
+    st.markdown(
+    f'<img src="data:image/gif;base64,{data_url}" alt="cat gif">',
+    unsafe_allow_html=True,
+)
     st.text("Série Histórica de Curitiba - Imagens Landsat")
     st.markdown("""
     O objetivo desta aplicação é apresentar análises realizadas a partir de imagens orbitais, na região de Curitiba.\n
