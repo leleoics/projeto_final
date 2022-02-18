@@ -62,40 +62,43 @@ def reservatorios(titulo):
 
     row1_col1, row1_col2 = st.columns([2, 1])
     with row1_col2:
-        local = st.selectbox("Selecione o local para visualização: ", ("Selecione", "Represa do Iraí", "Represa do Passaúna", "Piraquara I", "Piraquara II", "Rio Verde"))
+        local = st.selectbox("Selecione o local para visualização: ", ("Represa do Iraí", "Represa do Passaúna", "Piraquara I", "Piraquara II", "Rio Verde"))
         # Índices/ano das imagens obtidas
-        # 0 = 2015 ; 1 = 2016 ; 2 = 2017 ; 3 = 2019 ; 4 = 2020 ; 5 = 2021
-        list_colection = [  'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20150829',
-                                'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20160612',
-                                'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20170514',
-                                'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20190418',
-                                'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20200404',
-                                'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20210525']
+# Anos faltantes: 95 98 99 01 03 06 07 08 10 13 18
+        colecao = {
+        '1993':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_19930715',
+        '1994':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_19940718',
+        '1996':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_19960418',
+        '1997':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_19970624',
+        '2000':'LANDSAT/LE07/C01/T1_RT_TOA/LE07_220078_20000507',
+        '2002':'LANDSAT/LE07/C01/T1_RT_TOA/LE07_220078_20020902',
+        '2004':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_20040830',
+        '2015':'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20150829',
+        '2017':'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20170514',
+        '2019':'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20190418',
+        '2020':'LANDSAT/LE07/C01/T1_RT_TOA/LE07_221077_20200926',
+        '2021':'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20210525',
+                }
+        chaves = tuple(colecao.keys()) # transforma as chaves do dicionário em tupla
 
         if local != 'Selecione':
-            year = st.selectbox("Selecione o ano: ", ('2015', '2016', '2017', '2019', '2020', '2021'))
-            if year == '2015':
-                id = 0
-            if year == '2016':
-                id = 1
-            if year == '2017':
-                id = 2
-            if year == '2019':
-                id = 3
-            if year == '2020':
-                id = 4
-            if year == '2021':
-                id = 5
-                st.markdown("")
-                st.markdown("")
-                st.markdown("")
-                st.markdown("----")
-            st.markdown("Visualizando a coleção:\n{}".format(list_colection[id]))
+            year = st.selectbox("Selecione o ano: ", chaves)
+            id_imagem = colecao[year]
+            if 'LC08' in id_imagem:
+                    bandas = {'bands':'B6,B5,B4'}
+            else:
+                    bandas = {'bands':'B5,B4,B3'}
+
+            st.markdown("")
+            st.markdown("")
+            st.markdown("")
+            st.markdown("----")
+            st.markdown("Visualizando a coleção:\n{}".format(colecao[year]))
             Map = geemap.Map(locate_control=True, add_google_map=False)
             if local == "Represa do Iraí":
                 # Map = geemap.Map(locate_control=True, add_google_map=False)
-                imagem = ee.Image(list_colection[id]).clip(ee_APA_iai)
-                Map.addLayer(imagem, {'bands':'B6,B5,B4'}, 'Landsat 8')
+                imagem = ee.Image(colecao[year]).clip(ee_APA_iai)
+                Map.addLayer(imagem, bandas, 'Landsat 8')
                 Map.add_styled_vector(ee_APA_iai, column="NOME_60" ,palette=palette, layer_name="APA do Iraí", **vis_params_apa)
                 Map.add_styled_vector(ee_reserv_irai, column="nmoriginal" ,palette=palette, layer_name="Reserva Iraí", **vis_params_reserv)
                 Map.centerObject(ee_APA_iai, 12)
@@ -103,8 +106,8 @@ def reservatorios(titulo):
 
             if local == "Represa do Passaúna":
                 # Map = geemap.Map(locate_control=True, add_google_map=False)
-                imagem = ee.Image(list_colection[id]).clip(ee_APA_passauna)
-                Map.addLayer(imagem, {'bands':'B6,B5,B4'}, 'Landsat 8')
+                imagem = ee.Image(colecao[year]).clip(ee_APA_passauna)
+                Map.addLayer(imagem, bandas, 'Landsat 8')
                 Map.add_styled_vector(ee_APA_passauna, column="NOME_60" ,palette=palette, layer_name="APA do Passaúna", **vis_params_apa)
                 Map.add_styled_vector(ee_reserv_passauna, column="nmoriginal" ,palette=palette, layer_name="Reserva Passaúna", **vis_params_reserv)
                 Map.centerObject(ee_reserv_passauna, 12)
@@ -112,8 +115,8 @@ def reservatorios(titulo):
 
             if local == "Piraquara I":
                 # Map = geemap.Map(locate_control=True, add_google_map=False)
-                imagem = ee.Image(list_colection[id]).clip(ee_APA_piraquara)
-                Map.addLayer(imagem, {'bands':'B6,B5,B4'}, 'Landsat 8')
+                imagem = ee.Image(colecao[year]).clip(ee_APA_piraquara)
+                Map.addLayer(imagem, bandas, 'Landsat 8')
                 Map.add_styled_vector(ee_APA_piraquara, column="NOME_60" ,palette=palette, layer_name="APA do Piraquara", **vis_params_apa)
                 Map.add_styled_vector(ee_reserv_piraquara, column="nmoriginal" ,palette=palette, layer_name="Reserva Piraquara I", **vis_params_reserv)
                 Map.centerObject(ee_reserv_piraquara, 12)
@@ -121,8 +124,8 @@ def reservatorios(titulo):
 
             if local == "Piraquara II":
                 # Map = geemap.Map(locate_control=True, add_google_map=False)
-                imagem = ee.Image(list_colection[id]).clip(ee_APA_piraquara_II)
-                Map.addLayer(imagem, {'bands':'B6,B5,B4'}, 'Landsat 8')
+                imagem = ee.Image(colecao[year]).clip(ee_APA_piraquara_II)
+                Map.addLayer(imagem, bandas, 'Landsat 8')
                 Map.add_styled_vector(ee_APA_piraquara_II, column="NOME_60" ,palette=palette, layer_name="APA do Piraquara", **vis_params_apa)
                 Map.add_styled_vector(ee_reserv_piraquara_II, column="nmoriginal" ,palette=palette, layer_name="Reserva Piraquara II", **vis_params_reserv)
                 Map.centerObject(ee_reserv_piraquara_II, 12)
@@ -130,8 +133,8 @@ def reservatorios(titulo):
                 
             if local == "Rio Verde":
                 # Map = geemap.Map(locate_control=True, add_google_map=False)
-                imagem = ee.Image(list_colection[id]).clip(ee_APA_rio_verde)
-                Map.addLayer(imagem, {'bands':'B6,B5,B4'}, 'Landsat 8')
+                imagem = ee.Image(colecao[year]).clip(ee_APA_rio_verde)
+                Map.addLayer(imagem, bandas, 'Landsat 8')
                 Map.add_styled_vector(ee_APA_rio_verde, column="NOME_60" ,palette=palette, layer_name="APA do Rio Verde", **vis_params_apa)
                 Map.add_styled_vector(ee_reserv_rio_verde, column="nmoriginal" ,palette=palette, layer_name="Reserva Rio Verde", **vis_params_reserv)
                 Map.centerObject(ee_reserv_rio_verde, 12)
@@ -141,8 +144,8 @@ def reservatorios(titulo):
         else:
             Map = geemap.Map(locate_control=True, add_google_map=False)
             Map.add_styled_vector(ee_area_estudo, column="id" ,palette=palette, layer_name="Area de estudo", **vis_params_apa)
-            imagem = ee.Image(list_colection[4]).clip(ee_area_estudo)
-            Map.addLayer(imagem, {'bands':'B6,B5,B4'}, 'Landsat 8')
+            imagem = ee.Image(colecao[year]).clip(ee_area_estudo)
+            Map.addLayer(imagem, bandas, 'Landsat 8')
             Map.centerObject(ee_area_estudo, 10)
 
     with row1_col1:
