@@ -19,7 +19,7 @@ def reservatorios(titulo):
     st.markdown("----")
     st.markdown("Nesta seção é possível encontrar uma análise temporal dos reservatórios da região de Curitiba.")
     # Parâmetros de estilo para a APA #visualizar depois com linha dotted
-    vis_params_apa = {'color': '#228B22', 'colorOpacity': 1, 'pointSize': 3, 'pointShape': 'circle', 'width': 2, 'lineType': 'solid', 'fillColorOpacity': 0.1}
+    vis_params_apa = {'color': '#228B22', 'colorOpacity': 1, 'pointSize': 3, 'pointShape': 'circle', 'width': 2, 'lineType': 'dotted', 'fillColorOpacity': 0.1}
     # Parâmetros de estilo para o reservatório
     vis_params_reserv = {'color': '#9cc0f9', 'colorOpacity': 1, 'pointSize': 3, 'pointShape': 'circle', 'width': 1, 'lineType': 'solid', 'fillColorOpacity': 0.15}
     # Paleta de cores em comum 
@@ -66,18 +66,18 @@ def reservatorios(titulo):
         # Índices/ano das imagens obtidas
 # Anos faltantes: 95 98 99 01 03 06 07 08 10 13 18
         colecao = {
-        '1993':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_19930715',
-        '1994':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_19940718',
-        '1996':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_19960418',
-        '1997':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_19970624',
-        '2000':'LANDSAT/LE07/C01/T1_RT_TOA/LE07_220078_20000507',
-        '2002':'LANDSAT/LE07/C01/T1_RT_TOA/LE07_220078_20020902',
-        '2004':'LANDSAT/LT05/C01/T1_TOA/LT05_220078_20040830',
-        '2015':'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20150829',
-        '2017':'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20170514',
-        '2019':'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20190418',
-        '2020':'LANDSAT/LE07/C01/T1_RT_TOA/LE07_221077_20200926',
-        '2021':'LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20210525',
+        '1993':('LANDSAT/LT05/C01/T1_TOA/LT05_220078_19930715'),
+        '1994':('LANDSAT/LT05/C01/T1_TOA/LT05_220078_19940718'),
+        '1996':('LANDSAT/LT05/C01/T1_TOA/LT05_220078_19960418'),
+        '1997':('LANDSAT/LT05/C01/T1_TOA/LT05_220078_19970624'),
+        '2000':('LANDSAT/LE07/C01/T1_RT_TOA/LE07_220078_20000507'),
+        '2002':('LANDSAT/LE07/C01/T1_RT_TOA/LE07_220078_20020902'),
+        '2004':('LANDSAT/LT05/C01/T1_TOA/LT05_220078_20040830'),
+        '2015':('LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20150829'),
+        '2017':('LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20170514'),
+        '2019':('LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20190418'),
+        '2020':('LANDSAT/LE07/C01/T1_RT_TOA/LE07_221077_20200926'),
+        '2021':('LANDSAT/LC08/C01/T1_RT_TOA/LC08_220078_20210525'),
                 }
         chaves = tuple(colecao.keys()) # transforma as chaves do dicionário em tupla
 
@@ -85,24 +85,26 @@ def reservatorios(titulo):
             year = st.selectbox("Selecione o ano: ", chaves)
             id_imagem = colecao[year]
             if 'LC08' in id_imagem:
-                    bandas = {'bands':'B6,B5,B4'}
+                    bandas = {'bands':'B5,B4,B3'}
             else:
                     bandas = {'bands':'B5,B4,B3'}
 
-            st.markdown("")
-            st.markdown("")
-            st.markdown("")
-            st.markdown("----")
+
             st.markdown("Visualizando a coleção:\n{}".format(colecao[year]))
+            st.markdown("----")
             Map = geemap.Map(locate_control=True, add_google_map=False)
             if local == "Represa do Iraí":
                 # Map = geemap.Map(locate_control=True, add_google_map=False)
+                texto = "DECRETO Nº 1753 - 06/05/1996: Institui a criação da APA Estadual do Iraí"
                 imagem = ee.Image(colecao[year]).clip(ee_APA_iai)
                 Map.addLayer(imagem, bandas, 'Landsat 8')
                 Map.add_styled_vector(ee_APA_iai, column="NOME_60" ,palette=palette, layer_name="APA do Iraí", **vis_params_apa)
-                Map.add_styled_vector(ee_reserv_irai, column="nmoriginal" ,palette=palette, layer_name="Reserva Iraí", **vis_params_reserv)
+                if year in ('2000', '2002', '2004', '2015', '2017', '2019', '2020', '2021'):
+                    Map.add_styled_vector(ee_reserv_irai, column="nmoriginal" ,palette=palette, layer_name="Reserva Iraí", **vis_params_reserv)
                 Map.centerObject(ee_APA_iai, 12)
                 Map.addLayerControl()
+                st.markdown(texto)
+
 
             if local == "Represa do Passaúna":
                 # Map = geemap.Map(locate_control=True, add_google_map=False)

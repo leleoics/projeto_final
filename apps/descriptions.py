@@ -2,18 +2,20 @@ import streamlit as st
 from PIL import Image
 import base64
 
+
+
 logo_ee = Image.open("./data/brand_ee.png")
 logo_ufpr = Image.open("./data/brand_ufpr.png")
 logo_streamlit = Image.open("./data/brand_streamlit.png")
 logo_github = Image.open("./data/brand_github.png")
 logo_cartografica = Image.open("./data/brand_cartografica.png")
 
-"""### gif from local file"""
-file_ = open("./data/serie_historica/serie_historica.gif", "rb")
-contents = file_.read()
-data_url = base64.b64encode(contents).decode("utf-8")
-file_.close()
-
+# def plotar_gif():
+#     file_ = open("./data/serie_historica/serie_historica.gif", "rb")
+#     contents = file_.read()
+#     data_url = base64.b64encode(contents).decode("utf-8")
+#     file_.close()
+#     return data_url
 
 
 def inicio(titulo):
@@ -23,11 +25,10 @@ def inicio(titulo):
     Esta é uma aplicação em desenvolvimento como projeto final do curso de Engenharia Cartografica e de Agrimensura 
     da Universidade Federal do Paraná.   
             """)
-    st.markdown(
-    f'<img src="data:image/gif;base64,{data_url}" alt="cat gif">',
-    unsafe_allow_html=True,
-)
-    st.text("Série Histórica de Curitiba - Imagens Landsat")
+    # data_url = plotar_gif()
+    # st.markdown(
+    # f'<img src="data:image/gif;base64,{data_url}" alt="historic gif";>',
+    # unsafe_allow_html=True)
     st.markdown("""
     O objetivo desta aplicação é apresentar análises realizadas a partir de imagens orbitais, na região de Curitiba.\n
     Foram definidas áreas de represas da grande Curitiba como regiões de estudo, para apresentar séries temporais de imagens.\n

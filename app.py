@@ -2,22 +2,24 @@ import streamlit as st
 from apps.descriptions import inicio, sobre
 from apps.mapas_base import reservatorios
 import ee
-
-
-service_account = "projetofinal@projetofinal-340114.iam.gserviceaccount.com"
-key_path = "./data/projetofinal-340114-5db12cbc8740.json"
-credentials = ee.ServiceAccountCredentials(service_account, key_path)
-ee.Initialize(credentials)
+from PIL import Image
 
 #CONFIGURANDO O STREAMLIT:
 #- Passando o título da página;
 #- Ícone;
 #- Definido o layout wide;
 #- Barra lateral sempre aberta;
+logo = Image.open("./data/ufpr_b.jpg")
 st.set_page_config(
-page_title="Leonardo",
-layout="wide",
-initial_sidebar_state="expanded")
+page_title="TCC",
+page_icon=logo,
+layout="wide")
+#INICIALIZANDO O GOOGLE EARTH ENGINE:
+service_account = "projetofinal@projetofinal-340114.iam.gserviceaccount.com"
+key_path = "./data/projetofinal-340114-5db12cbc8740.json"
+credentials = ee.ServiceAccountCredentials(service_account, key_path)
+ee.Initialize(credentials)
+
 
 # BARRA LATERAL
 # - Inserindo título;
@@ -37,5 +39,3 @@ if selecao == "Reservatórios de água":
 # SOBRE
 if selecao == "Sobre":
     sobre(selecao)
-
-
