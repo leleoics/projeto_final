@@ -23,10 +23,10 @@ key_path = "./data/projetofinal-340114-5db12cbc8740.json"
 credentials = ee.ServiceAccountCredentials(service_account, key_path)
 ee.Initialize(credentials)
 
-# Testando novo Layout com cabeçalho
+# Cabeçalho com botões de navegação
 col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1])
 with col1:
-    pagina1 = st.button("Início", help="Ir para página inicial")
+    pagina1 = st.button("Página Inícial", help="Ir para página inicial")
 
 with col2:
     pagina2 = st.button("Reservatórios de Água", help="Análises sobre os reservatórios de água.")
