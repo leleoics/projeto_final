@@ -22,8 +22,7 @@ def inicio(titulo):
         st.image("https://media.giphy.com/media/YLuFnx1KX7a0srNgc2/giphy.gif", width=480, caption="Série histórica da região de Curitiba. Fonte: Autor")
     with col02:
         st.image("https://media.giphy.com/media/7Zgv7DmuOqYZjGdcul/giphy.gif", width=430, caption="Série histórica da Represa do Iraí, Landsat 8 - Combinação: B5, B6, B4. Fonte: Autor")
-    
-    #Inserir outro gif dp lado
+
     # tabela = """
     # Exemplo   | Valor do exemplo
     # --------- | :------:

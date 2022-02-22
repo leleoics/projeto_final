@@ -25,33 +25,25 @@ ee.Initialize(credentials)
 
 # Cabeçalho com botões de navegação
 st.markdown("----")
-col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1])
-with col1:
-    pagina1 = st.button("Página Inícial", help="Ir para página inicial")
+menu = st.expander('Ver Menu')
+with menu:
+    pagina = st.radio(
+    "Selecione a página: ",
+    ('Página Inícial', 'Reservatórios de Água', 'Crescimento populacional', 'Relatórios por ano', 'Metadados', 'Sobre'))
 
-with col2:
-    pagina2 = st.button("Reservatórios de Água", help="Análises sobre os reservatórios de água.")
-
-with col3:
-    pagina3 = st.button("Crescimento populacional", help="Análises sobre o crescimento populacional.", disabled=True)
-
-with col4:
-    pagina4 = st.button("Relatórios por ano", help="Acessar catálogo de relatórios.", disabled=True)
-    
-with col5:
-    pagina5 = st.button("Metadados", help="Acessar metadados do projeto.", disabled=True)
-
-with col6:
-    pagina6 = st.button("Sobre", help="Informações sobre o projeto.")
-    
-verificacao = (pagina2, pagina3, pagina4, pagina5, pagina6) #Verificação de páginas ativas
 st.markdown("----")
-if sum(verificacao) == 0: #Se outra página estiver ativa, não entra nesta condição ou seja, fecha a aba
+if pagina == "Página Inícial":
     inicio('Início')
-if pagina2 == 1:
+if pagina == 'Reservatórios de Água':
     reservatorios('Reservatórios de Água')
-if pagina3 == 1:
+if pagina == 'Crescimento populacional':
     st.markdown("Em desenvolvimento")
     st.markdown("Aqui será apresentado mapas com operações de sig, censo por ano e gráficos mostrando o crescimento populacional")
-if pagina6 == 1:
+if pagina == 'Relatórios por ano':
+    st.markdown("Em desenvolvimento")
+    st.markdown("Aqui será possível visualizar análises e baixar um relatório pdf com as informações de cada ano")
+if pagina == 'Metadados':
+    st.markdown("Em desenvolvimento")
+    st.markdown("Aqui será possível visualizar os metadados e baixar e, pdf.")
+if pagina == 'Sobre':
     sobre('Sobre')

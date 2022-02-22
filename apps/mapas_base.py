@@ -5,7 +5,7 @@ import folium
 import ee
 
 
-def folium_static(fig, width=800, height=650):
+def folium_static(fig, width=890, height=500):
     if isinstance(fig, folium.Map):
         fig = folium.Figure().add_child(fig)
     return components.html(fig.render(), height=(fig.height or height), width=width)
@@ -63,9 +63,24 @@ def reservatorios(titulo):
     geojson_APA_rioverde = "./data/APA_rio_verde.geojson"
     ee_APA_rio_verde = geemap.geojson_to_ee(geojson_APA_rioverde)
     ee_reserv_rio_verde = geemap.geojson_to_ee(geojson_reserv_rioverde)
-
-    row1_col1, row1_col2 = st.columns([2, 1])
-    with row1_col2:
+    col11, col21 = st.columns([3, 1])
+    tabela = """
+    Represas     | Criação  | Bairro atendimento | Capacidade(m³)   |
+    ------------ | :------: | :----------------: |  :-------------: |
+    Iraí         | 199x     |      Preencher     |    Preencher     |
+    Passaúna     | 199x     |      Preencher     |    Preencher     |
+    Piraquara I  | 199x     |      Preencher     |    Preencher     |
+    Piraquara II | 199x     |      Preencher     |    Preencher     |
+    Rio Verde    | 199x     |      Preencher     |    Preencher     |
+    
+    """
+    with col11:
+        st.markdown(tabela, unsafe_allow_html=True)
+    with col21:
+        st.markdown("Adicionar gráfico relacionando a capacidade dos reservatórios")
+    st.markdown('')
+    col12, col22 = st.columns([3, 1])
+    with col22:
         local = st.selectbox("Selecione o local para visualização: ", ("Selecione", "Represa do Iraí", "Represa do Passaúna", "Piraquara I", "Piraquara II", "Rio Verde"))
         # Índices/ano das imagens obtidas
         # Anos faltantes: 95 98 99 01 03 06 07 08 10 13 18
@@ -138,7 +153,7 @@ def reservatorios(titulo):
             Map.addLayerControl()
            
 
-        else:
+        if local == "Selecione":
             Map = geemap.Map(locate_control=True, add_google_map=False)
             Map.add_styled_vector(ee_area_estudo, column="id" ,palette=palette, layer_name="Area de estudo", **vis_params_apa)
             imagem = ee.Image(colecao[year]).clip(ee_area_estudo)
@@ -147,9 +162,9 @@ def reservatorios(titulo):
             Map.addLayerControl()
             Map.centerObject(ee_area_estudo, 10)
 
-    with row1_col1:
-        folium_static(Map, width=550)
-        with st.expander("Visualizar ID:"):
+    with col12:
+        folium_static(Map)
+        with st.expander("Visualizar ID da imagem:"):
             st.markdown(id_imagem)
 
     return
