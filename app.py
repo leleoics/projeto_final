@@ -16,7 +16,7 @@ page_icon=logo,
 layout="wide",
 initial_sidebar_state="expanded",
 menu_items={
-'Get Help': 'https://www.extremelycoolapp.com/help'})
+'Get help': 'https://github.com/leleoics/projeto_final'})
 #INICIALIZANDO O GOOGLE EARTH ENGINE:
 service_account = "projetofinal@projetofinal-340114.iam.gserviceaccount.com"
 key_path = "./data/projetofinal-340114-5db12cbc8740.json"
@@ -24,6 +24,7 @@ credentials = ee.ServiceAccountCredentials(service_account, key_path)
 ee.Initialize(credentials)
 
 # Cabeçalho com botões de navegação
+st.markdown("----")
 col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1])
 with col1:
     pagina1 = st.button("Página Inícial", help="Ir para página inicial")
@@ -49,6 +50,8 @@ if sum(verificacao) == 0: #Se outra página estiver ativa, não entra nesta cond
     inicio('Início')
 if pagina2 == 1:
     reservatorios('Reservatórios de Água')
-    st.markdown("Entrou apenas aqui")
+if pagina3 == 1:
+    st.markdown("Em desenvolvimento")
+    st.markdown("Aqui será apresentado mapas com operações de sig, censo por ano e gráficos mostrando o crescimento populacional")
 if pagina6 == 1:
     sobre('Sobre')
