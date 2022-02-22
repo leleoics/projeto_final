@@ -143,7 +143,7 @@ def reservatorios(titulo):
             Map.add_styled_vector(ee_area_estudo, column="id" ,palette=palette, layer_name="Area de estudo", **vis_params_apa)
             imagem = ee.Image(colecao[year]).clip(ee_area_estudo)
             Map.addLayer(imagem, bandas, 'Imagem Landsat')
-            Map.add_styled_vector(ee_bairros, column="NOME" ,palette=palette, layer_name="Bairros Curitiba", **vis_params_apa)
+            # Map.add_styled_vector(ee_bairros, column="NOME" ,palette=palette, layer_name="Bairros Curitiba", **vis_params_apa)
             Map.addLayerControl()
             Map.centerObject(ee_bairros, 10)
 
