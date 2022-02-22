@@ -10,13 +10,6 @@ logo_streamlit = Image.open("./data/brand_streamlit.png")
 logo_github = Image.open("./data/brand_github.png")
 logo_cartografica = Image.open("./data/brand_cartografica.png")
 
-# def plotar_gif():
-#     file_ = open("./data/serie_historica/serie_historica.gif", "rb")
-#     contents = file_.read()
-#     data_url = base64.b64encode(contents).decode("utf-8")
-#     file_.close()
-#     return data_url
-
 
 def inicio(titulo):
     st.title(titulo)
@@ -25,10 +18,8 @@ def inicio(titulo):
     Esta é uma aplicação em desenvolvimento como projeto final do curso de Engenharia Cartografica e de Agrimensura 
     da Universidade Federal do Paraná.   
             """)
-    # data_url = plotar_gif()
-    # st.markdown(
-    # f'<img src="data:image/gif;base64,{data_url}" alt="historic gif";>',
-    # unsafe_allow_html=True)
+    st.image("https://media.giphy.com/media/PdNKkVOwmPwIY7VT03/giphy.gif", width=480, caption="Série histórica da região de Curitiba. Fonte: Autor")
+    #Inserir outro gif dp lado
     st.markdown("""
     O objetivo desta aplicação é apresentar análises realizadas a partir de imagens orbitais, na região de Curitiba.\n
     Foram definidas áreas de represas da grande Curitiba como regiões de estudo, para apresentar séries temporais de imagens.\n
