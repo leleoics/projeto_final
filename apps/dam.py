@@ -20,50 +20,48 @@ def reservatorios(titulo):
     st.markdown("Nesta seção é possível encontrar uma análise temporal dos reservatórios da região de Curitiba.")
     # Parâmetros de estilo para a APA #visualizar depois com linha dotted
     vis_params_apa = {'color': '#228B22', 'colorOpacity': 1, 'pointSize': 3, 'pointShape': 'circle', 'width': 2, 'lineType': 'dotted', 'fillColorOpacity': 0.1}
-    # Parâmetros de estilo para os bairros 
-    vis_params_bairros = {'color': '#228B22', 'colorOpacity': 1, 'pointSize': 3, 'pointShape': 'circle', 'width': 2, 'lineType': 'solid', 'fillColorOpacity': 0.1}
-    # Parâmetros de estilo para o reservatório
+# Parâmetros de estilo para o reservatório
     vis_params_reserv = {'color': '#9cc0f9', 'colorOpacity': 1, 'pointSize': 3, 'pointShape': 'circle', 'width': 1, 'lineType': 'solid', 'fillColorOpacity': 0.15}
     # Paleta de cores em comum 
     palette = ['006633', 'E5FFCC', '662A00', 'D8D8D8', 'F5F5F5']
     # Carregando dados e convertendo para objetos ee
-    geojson_area_estudo = "./data/area_estudo.geojson"
-    geojson_bairros = "./data/Bairros_Curitiba.geojson"
+    geojson_area_estudo = "./data/layers_dam/area_estudo.geojson"
     ee_area_estudo = geemap.geojson_to_ee(geojson_area_estudo)
-    ee_bairros = geemap.geojson_to_ee(geojson_bairros)
+
     #                       Irai
-    geojson_reserv_irai = "./data/reserv_irai.geojson"
+    geojson_reserv_irai = "./data/layers_dam/reserv_irai.geojson"
     geojson_APA_irai = "./data/APA_irai.geojson"
     ee_APA_iai = geemap.geojson_to_ee(geojson_APA_irai)
     ee_reserv_irai = geemap.geojson_to_ee(geojson_reserv_irai)
 
     #                     Passauna
-    geojson_reserv_passauna = "./data/reserv_passauna.geojson"
-    geojson_APA_passauna = "./data/APA_passauna.geojson"
+    geojson_reserv_passauna = "./data/layers_dam/reserv_passauna.geojson"
+    geojson_APA_passauna = "./data/layers_dam/APA_passauna.geojson"
     ee_APA_passauna = geemap.geojson_to_ee(geojson_APA_passauna)
     ee_reserv_passauna = geemap.geojson_to_ee(geojson_reserv_passauna)
 
 
     #                     Piraquara I
-    geojson_reserv_piraquaraI = "./data/reserv_piraquara_I.geojson"
-    geojson_APA_piraquara = "./data/APA_piraquara.geojson"
+    geojson_reserv_piraquaraI = "./data/layers_dam/reserv_piraquara_I.geojson"
+    geojson_APA_piraquara = "./data/layers_dam/APA_piraquara.geojson"
     ee_APA_piraquara = geemap.geojson_to_ee(geojson_APA_piraquara)
     ee_reserv_piraquara = geemap.geojson_to_ee(geojson_reserv_piraquaraI)
 
 
     #                     Piraquara II
-    geojson_reserv_piraquaraII = "./data/reserv_piraquara_II.geojson"
-    geojson_APA_piraquara = "./data/APA_piraquara.geojson"
+    geojson_reserv_piraquaraII = "./data/layers_dam/reserv_piraquara_II.geojson"
+    geojson_APA_piraquara = "./data/layers_dam/APA_piraquara.geojson"
     ee_APA_piraquara_II = geemap.geojson_to_ee(geojson_APA_piraquara)
     ee_reserv_piraquara_II = geemap.geojson_to_ee(geojson_reserv_piraquaraII)
 
     
     #                      Rio Verde
-    geojson_reserv_rioverde = "./data/reserv_rio_verde.geojson"
-    geojson_APA_rioverde = "./data/APA_rio_verde.geojson"
+    geojson_reserv_rioverde = "./data/layers_dam/reserv_rio_verde.geojson"
+    geojson_APA_rioverde = "./data/layers_dam/APA_rio_verde.geojson"
     ee_APA_rio_verde = geemap.geojson_to_ee(geojson_APA_rioverde)
     ee_reserv_rio_verde = geemap.geojson_to_ee(geojson_reserv_rioverde)
     col11, col21 = st.columns([3, 1])
+    
     tabela = """
     Represas     | Criação  | Bairro atendimento | Capacidade(m³)   |
     ------------ | :------: | :----------------: |  :-------------: |
