@@ -1,6 +1,7 @@
 import streamlit as st
-from apps.descriptions import inicio, sobre
-from apps.mapas_base import reservatorios
+from apps.home import inicio
+from apps.descriptions import sobre
+from apps.dam import reservatorios
 import ee
 from PIL import Image
 
@@ -23,7 +24,7 @@ key_path = "./data/projetofinal-340114-5db12cbc8740.json"
 credentials = ee.ServiceAccountCredentials(service_account, key_path)
 ee.Initialize(credentials)
 
-# Cabeçalho com botões de navegação
+#CABEÇALHO COM ACESSO AOS APPs
 st.markdown("----")
 menu = st.expander('Ver Menu')
 with menu:
@@ -34,16 +35,26 @@ with menu:
 st.markdown("----")
 if pagina == "Página Inícial":
     inicio('Início')
+
+
 if pagina == 'Reservatórios de Água':
     reservatorios('Reservatórios de Água')
+
+
 if pagina == 'Crescimento populacional':
     st.markdown("Em desenvolvimento")
     st.markdown("Aqui será apresentado mapas com operações de sig, censo por ano e gráficos mostrando o crescimento populacional")
+
+
 if pagina == 'Relatórios por ano':
     st.markdown("Em desenvolvimento")
     st.markdown("Aqui será possível visualizar análises e baixar um relatório pdf com as informações de cada ano")
+
+
 if pagina == 'Metadados':
     st.markdown("Em desenvolvimento")
     st.markdown("Aqui será possível visualizar os metadados e baixar e, pdf.")
+
+
 if pagina == 'Sobre':
     sobre('Sobre')
