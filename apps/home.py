@@ -2,11 +2,11 @@ import streamlit as st
 from PIL import Image
 
 
-logo_ee = Image.open("./data/brand_ee.png")
-logo_ufpr = Image.open("./data/brand_ufpr.png")
-logo_streamlit = Image.open("./data/brand_streamlit.png")
-logo_github = Image.open("./data/brand_github.png")
-logo_cartografica = Image.open("./data/brand_cartografica.png")
+logo_ee = Image.open("./data/thumbnails/ee.png")
+logo_ufpr = Image.open("./data/thumbnails/ufpr.png")
+logo_streamlit = Image.open("./data/thumbnails/streamlit.png")
+logo_github = Image.open("./data/thumbnails/github.png")
+logo_cartografica = Image.open("./data/thumbnails/cartografica.png")
 
 
 

@@ -10,7 +10,7 @@ from PIL import Image
 #- Ícone;
 #- Definido o layout wide;
 #- Barra lateral sempre aberta;
-logo = Image.open("./data/ufpr_b.jpg")
+logo = Image.open("./data/thumbnails/ufpr_b.jpg")
 st.set_page_config(
 page_title="TCC",
 page_icon=logo,
