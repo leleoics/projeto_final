@@ -1,4 +1,6 @@
+from turtle import color
 import streamlit.components.v1 as components
+import matplotlib.pyplot as plt
 import streamlit as st
 import geemap.foliumap as geemap
 import folium
@@ -30,7 +32,7 @@ def reservatorios(titulo):
 
     #                       Irai
     geojson_reserv_irai = "./data/layers_dam/reserv_irai.geojson"
-    geojson_APA_irai = "./data/APA_irai.geojson"
+    geojson_APA_irai = "./data/layers_dam/APA_irai.geojson"
     ee_APA_iai = geemap.geojson_to_ee(geojson_APA_irai)
     ee_reserv_irai = geemap.geojson_to_ee(geojson_reserv_irai)
 
@@ -60,22 +62,25 @@ def reservatorios(titulo):
     geojson_APA_rioverde = "./data/layers_dam/APA_rio_verde.geojson"
     ee_APA_rio_verde = geemap.geojson_to_ee(geojson_APA_rioverde)
     ee_reserv_rio_verde = geemap.geojson_to_ee(geojson_reserv_rioverde)
-    col11, col21 = st.columns([3, 1])
-    
+    col11, col21 = st.columns([2, 1])
+
     tabela = """
-    Represas     | Criação  | Bairro atendimento | Capacidade(m³)   |
-    ------------ | :------: | :----------------: |  :-------------: |
-    Iraí         | 199x     |      Preencher     |    Preencher     |
-    Passaúna     | 199x     |      Preencher     |    Preencher     |
-    Piraquara I  | 199x     |      Preencher     |    Preencher     |
-    Piraquara II | 199x     |      Preencher     |    Preencher     |
-    Rio Verde    | 199x     |      Preencher     |    Preencher     |
-    
+    Represas     | Inauguração  | Bairro atendimento | Capacidade(m³)   |
+    ------------ | :----------: | :----------------: |  :-------------: |
+    Iraí         |     199x     |      Preencher     |   Preencher      |
+    Passaúna     |     1986     |      Preencher     |   Preencher      |
+    Piraquara I  |     1979     |      Preencher     |   23.000.000     |
+    Piraquara II |     2008     |      Preencher     |   21.000.000     |
+    Rio Verde    |     199x     |      Preencher     |   Preencher      | 
     """
+    df_volume = {'Iraí':0,'Passaúna':0, 'Piraquara I':23, 'Piraquara II':21, 'Rio Verde':0}
     with col11:
         st.markdown(tabela, unsafe_allow_html=True)
     with col21:
-        st.markdown("Adicionar gráfico relacionando a capacidade dos reservatórios")
+        st.markdown("Capacidade (m³) dos reservatórios de água:")
+        fig, ax = plt.subplots()
+        ax.bar(df_volume.keys(), df_volume.values(), color="Maroon")
+        st.pyplot(fig)
     st.markdown('')
     col12, col22 = st.columns([3, 1])
     with col22:
@@ -120,6 +125,7 @@ def reservatorios(titulo):
 
         if local == "Represa do Passaúna":
             imagem = ee.Image(colecao[year]).clip(ee_APA_passauna)
+            st.image("https://site.sanepar.com.br/sites/site.sanepar.com.br/files/imagecache/800x600/memoria/passauna_primeirafase_1986.jpg", width=300, caption="1986 - Inauguração do Sistema Passaúna (1ª Etapa)\n1992 - Sistema Passaúna - Entrega da 2ª Etapa")
             Map.addLayer(imagem, bandas, 'Imagem Landsat')
             Map.add_styled_vector(ee_APA_passauna, column="NOME_60" ,palette=palette, layer_name="APA do Passaúna", **vis_params_apa)
             Map.add_styled_vector(ee_reserv_passauna, column="nmoriginal" ,palette=palette, layer_name="Reserva Passaúna", **vis_params_reserv)
@@ -127,6 +133,8 @@ def reservatorios(titulo):
             Map.addLayerControl()
 
         if local == "Piraquara I":
+            st.markdown("1979 - Inaugurada a Barragem do Cayuguava (também conhecida como Piraquara I), a primeira grande barragem para acumulação de água no Paraná. Fonte: Sanepar")
+            st.image("https://piraquara.pr.gov.br/turismo/dbimages/-dsc0138_102091_img.jpg", width=300, caption="Barragem Piraquara I. Imagem: Sanepar")
             imagem = ee.Image(colecao[year]).clip(ee_APA_piraquara)
             Map.addLayer(imagem, bandas, 'Imagem Landsat')
             Map.add_styled_vector(ee_APA_piraquara, column="NOME_60" ,palette=palette, layer_name="APA do Piraquara", **vis_params_apa)
@@ -135,6 +143,8 @@ def reservatorios(titulo):
             Map.addLayerControl()
 
         if local == "Piraquara II":
+            st.markdown("1979 - Inaugurada a Barragem do Cayuguava (também conhecida como Piraquara I), a primeira grande barragem para acumulação de água no Paraná. Fonte: Sanepar")
+            st.image("https://piraquara.pr.gov.br/turismo/dbimages/barragem-piraquara-ii-(51)_102092_img.jpg", width=300, caption="Barragem Piraquara I. Imagem: Sanepar")
             imagem = ee.Image(colecao[year]).clip(ee_APA_piraquara_II)
             Map.addLayer(imagem, bandas, 'Imagem Landsat')
             Map.add_styled_vector(ee_APA_piraquara_II, column="NOME_60" ,palette=palette, layer_name="APA do Piraquara", **vis_params_apa)
