@@ -2,6 +2,7 @@ import streamlit as st
 from apps.home import inicio
 from apps.descriptions import sobre
 from apps.dam import reservatorios
+from apps.growth import growth
 import ee
 from PIL import Image
 
@@ -42,8 +43,7 @@ if pagina == 'Reservatórios de Água':
 
 
 if pagina == 'Crescimento populacional':
-    st.markdown("Em desenvolvimento")
-    st.markdown("Aqui será apresentado mapas com operações de sig, censo por ano e gráficos mostrando o crescimento populacional")
+    growth(pagina)
 
 
 if pagina == 'Relatórios por ano':
