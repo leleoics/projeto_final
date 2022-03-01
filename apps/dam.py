@@ -1,4 +1,3 @@
-from turtle import color
 import streamlit.components.v1 as components
 import matplotlib.pyplot as plt
 import streamlit as st
