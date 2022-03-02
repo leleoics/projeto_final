@@ -1,15 +1,7 @@
 import streamlit as st
 from apps.maps import region
 
-# # Abrindo imagens locais
-# logo_ee = Image.open("./data/thumbnails/ee.png")
-# logo_ufpr = Image.open("./data/thumbnails/ufpr.png")
-# logo_streamlit = Image.open("./data/thumbnails/streamlit.png")
-# logo_github = Image.open("./data/thumbnails/github.png")
-# logo_cartografica = Image.open("./data/thumbnails/cartografica.png")
 
-
-@st.cache(suppress_st_warning=True)
 def plot_gif(selection):
     if selection == 1:
         st.image("https://media.giphy.com/media/YLuFnx1KX7a0srNgc2/giphy.gif", width=480, caption="Série histórica da região de Curitiba. Fonte: Autor")
@@ -18,7 +10,6 @@ def plot_gif(selection):
     return
 
 
-@st.cache(suppress_st_warning=True)
 def plot_image(selection):
     if selection == 'Earth Engine':
         st.image("https://media.giphy.com/media/DREdqwQr7fIkjefTN0/giphy.gif", caption="Google Earth Engine", width=80)
