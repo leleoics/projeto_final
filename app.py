@@ -2,7 +2,7 @@ import streamlit as st
 from apps.home import inicio
 from apps.descriptions import sobre
 from apps.dam import reservatorios
-from apps.growth import growth
+from apps.maps import region
 import ee
 from PIL import Image
 
@@ -16,7 +16,6 @@ st.set_page_config(
 page_title="TCC",
 page_icon=logo,
 layout="wide",
-initial_sidebar_state="expanded",
 menu_items={
 'Get help': 'https://github.com/leleoics/projeto_final'})
 #INICIALIZANDO O GOOGLE EARTH ENGINE:
@@ -31,19 +30,23 @@ menu = st.expander('Ver Menu')
 with menu:
     pagina = st.radio(
     "Selecione a página: ",
-    ('Página Inícial', 'Reservatórios de Água', 'Crescimento populacional', 'Relatórios por ano', 'Metadados', 'Sobre'))
+    ('Página Inícial', 'Área de interesse', 'Barragens', 'Análise populacional', 'Relatórios por ano', 'Metadados', 'Sobre'))
 
 st.markdown("----")
-if pagina == "Página Inícial":
-    inicio('Início')
+if pagina == 'Página Inícial':
+    inicio(pagina)
+
+if pagina == 'Área de interesse':
+    region(pagina)
 
 
-if pagina == 'Reservatórios de Água':
-    reservatorios('Reservatórios de Água')
+if pagina == 'Barragens':
+    reservatorios(pagina)
 
 
-if pagina == 'Crescimento populacional':
-    growth(pagina)
+if pagina == 'Análise populacional':
+    st.markdown('Em desenvolvimento, utilizando o mapa da região de interesse por enquanto')
+    region(pagina)
 
 
 if pagina == 'Relatórios por ano':
@@ -57,4 +60,4 @@ if pagina == 'Metadados':
 
 
 if pagina == 'Sobre':
-    sobre('Sobre')
+    sobre(pagina)
