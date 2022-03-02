@@ -4,11 +4,11 @@ from apps.maps import region
 def area_interesse(titulo):
     st.title(titulo)
     st.markdown("""
-    O estudo é realizado na região definida como Núcleo Urbano Central(NUC) da Região metropolitana de Curitiba.\n
-    Municípios que compõem o Núcleo Urbano Central (NUC): Almirante Tamandaré, Araucária, Campina Grande do Sul, 
+    O estudo é realizado na região definida como Núcleo Urbano Central (NUC) da Região metropolitana de Curitiba.\n
+    **Municípios que compõem o (NUC)**: Almirante Tamandaré, Araucária, Campina Grande do Sul, 
     Campo Largo, Campo Magro, Colombo, Curitiba, Fazenda Rio Grande, Itaperuçu, Pinhais, Piraquara, Quatro Barras, 
     Rio Branco do Sul e São José dos Pinhais.
-    """, unsafe_allow_html=True)
+    """)
     region()
     return
 

@@ -5,8 +5,6 @@ import ee
 from apps.dam import folium_static
 
 
-
-@st.cache
 def region():
     # Estilo da camada area NUC
     style_area_nuc = {'color': '#B22222', 'colorOpacity': 0.5, 'width': 4, 'lineType': 'dotted'}
@@ -30,6 +28,6 @@ def region():
     Map.addLayer(ee_NUC_a, vis_params=style_area_nuc, name="Núcleo Urbano Central")
     Map.add_labels(ee_NUC, column="NM_MUN", font_size= "8pt", font_color="#1C1C1C", layer_name='Rótulos', font_weight="bold")
     Map.addLayerControl()
-    folium_static(Map, width=1000, height=600)   
-    return
+    folium_static(Map, width=1000, height=600)  
+    return 
 

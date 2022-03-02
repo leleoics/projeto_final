@@ -1,57 +1,66 @@
 import streamlit as st
-from PIL import Image
+from apps.maps import region
 
-
-logo_ee = Image.open("./data/thumbnails/ee.png")
-logo_ufpr = Image.open("./data/thumbnails/ufpr.png")
-logo_streamlit = Image.open("./data/thumbnails/streamlit.png")
-logo_github = Image.open("./data/thumbnails/github.png")
-logo_cartografica = Image.open("./data/thumbnails/cartografica.png")
+# # Abrindo imagens locais
+# logo_ee = Image.open("./data/thumbnails/ee.png")
+# logo_ufpr = Image.open("./data/thumbnails/ufpr.png")
+# logo_streamlit = Image.open("./data/thumbnails/streamlit.png")
+# logo_github = Image.open("./data/thumbnails/github.png")
+# logo_cartografica = Image.open("./data/thumbnails/cartografica.png")
 
 
 @st.cache(suppress_st_warning=True)
-def plot_gif(selecao):
-    if selecao == 1:
+def plot_gif(selection):
+    if selection == 1:
         st.image("https://media.giphy.com/media/YLuFnx1KX7a0srNgc2/giphy.gif", width=480, caption="Série histórica da região de Curitiba. Fonte: Autor")
-    if selecao == 2:
+    if selection == 2:
         st.image("https://media.giphy.com/media/7Zgv7DmuOqYZjGdcul/giphy.gif", width=430, caption="Série histórica da Represa do Iraí, Landsat 8 - Combinação: B5, B6, B4. Fonte: Autor")
     return
 
-def inicio(titulo):
-    st.title(titulo)
+
+@st.cache(suppress_st_warning=True)
+def plot_image(selection):
+    if selection == 'Earth Engine':
+        st.image("https://media.giphy.com/media/DREdqwQr7fIkjefTN0/giphy.gif", caption="Google Earth Engine", width=80)
+    if selection == 'Github':
+        st.image("https://media.giphy.com/media/KSaNOvsbk0KdWkz7J9/giphy.gif", caption="GitHub", width=80)
+    if selection == 'Streamlit':
+        st.image("https://media.giphy.com/media/cjOSHYWOqfNwyLkRv8/giphy.gif", caption="Streamlit", width=80)
+    return
+
+def inicio(title):
+    st.title(title)
     st.info("""
     Esta é uma aplicação em desenvolvimento como projeto final do curso de Engenharia Cartografica e de Agrimensura 
     da Universidade Federal do Paraná.   
             """)
-    # col01, col02 = st.columns([1, 1])
-    # with col01:
-    #     st.image("https://media.giphy.com/media/YLuFnx1KX7a0srNgc2/giphy.gif", width=480, caption="Série histórica da região de Curitiba. Fonte: Autor")
-    # with col02:
-    #     st.image("https://media.giphy.com/media/7Zgv7DmuOqYZjGdcul/giphy.gif", width=430, caption="Série histórica da Represa do Iraí, Landsat 8 - Combinação: B5, B6, B4. Fonte: Autor")
-
     col01, col02 = st.columns([1, 1])
     with col01:
         plot_gif(1)
     with col02:
         plot_gif(2)
 
+    st.markdown("""
+    Este projeto está sendo desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
+    da Universidade Federal do Paraná. O objetivo é desenvolver uma aplicação web com análises temporais sobre o 
+    desenvolvimento da cidade de Curitiba e região metropolitana, analisando as Áreas de Preservação Permanentes (APPs) 
+    ao entorno das massas d'água, análises do crescimento populacional e também análises sobre o abastecimento de água 
+    do Núcleo Urbano Central (NUC).\n
+    """)
+    if st.checkbox("Visualizar área de estudo") == 1:
+        region()
+    st.markdown("----")
+    st.markdown("Esta aplicação utiliza as ferramentas:\n")
+    col11, col12, col13 = st.columns([2, 2, 1])
+    with col11:
+        plot_image('Github')
 
+    with col12:
+        plot_image('Streamlit')
 
-
-
-    # st.markdown("""
-    # O objetivo desta aplicação é apresentar análises realizadas a partir de imagens orbitais, na região de Curitiba.\n
-    # Foram definidas áreas de represas da grande Curitiba como regiões de estudo, para apresentar séries temporais de imagens.\n
-    # Além destas regiões, a região de Curitiba também será objeto de estudo, apresentando uma análise sobre o crescimento populacional ao longo dos anos.\n
-    # Esta aplicação utiliza as ferramentas:\n
-    # """)
-    # col11, col12, col13 = st.columns([2, 2, 1])
-    # with col11:
-    #     st.image(logo_github, caption="GitHub", width=80)
-    # with col12:
-    #     st.image(logo_streamlit, caption="Streamlit", width=80)
-    # with col13:
-    #     st.image(logo_ee, caption="Google Earth Engine", width=80)
+    with col13:
+        plot_image('Earth Engine')
+ 
 
     # st.markdown("----")
     # col21, col22, col23, col24 = st.columns([1, 1, 1, 1])
