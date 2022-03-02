@@ -10,7 +10,9 @@ def area_interesse(titulo):
     Rio Branco do Sul e São José dos Pinhais.
     """)
     if st.checkbox("Visualizar mapa da área de estudo:") == 1:
+        st.markdown("----")
         region()
+        st.markdown("----")
     return
 
 

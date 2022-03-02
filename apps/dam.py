@@ -18,15 +18,14 @@ def folium_static(fig, width=890, height=500):
 def reservatorios(titulo):
     st.title(titulo)
     st.markdown("----")
-    st.markdown("Nesta seção é possível encontrar uma análise temporal dos reservatórios da região de Curitiba.")
     # Parâmetros de estilo para a APA #visualizar depois com linha dotted
     vis_params_apa = {'color': '#228B22', 'colorOpacity': 1, 'pointSize': 3, 'pointShape': 'circle', 'width': 2, 'lineType': 'dotted', 'fillColorOpacity': 0.1}
-# Parâmetros de estilo para o reservatório
+    # Parâmetros de estilo para o reservatório
     vis_params_reserv = {'color': '#9cc0f9', 'colorOpacity': 1, 'pointSize': 3, 'pointShape': 'circle', 'width': 1, 'lineType': 'solid', 'fillColorOpacity': 0.15}
     # Paleta de cores em comum 
     palette = ['006633', 'E5FFCC', '662A00', 'D8D8D8', 'F5F5F5']
     # Carregando dados e convertendo para objetos ee
-    geojson_area_estudo = "./data/layers_dam/area_estudo.geojson"
+    geojson_area_estudo = "./data/base/NUC_A.geojson"
     ee_area_estudo = geemap.geojson_to_ee(geojson_area_estudo)
 
     #                       Irai
@@ -64,19 +63,20 @@ def reservatorios(titulo):
     col11, col21 = st.columns([2, 1])
 
     tabela = """
-    Represas     | Inauguração  | Bairro atendimento | Capacidade(m³)   |
-    ------------ | :----------: | :----------------: |  :-------------: |
-    Iraí         |     199x     |      Preencher     |   Preencher      |
-    Passaúna     |     1986     |      Preencher     |   Preencher      |
-    Piraquara I  |     1979     |      Preencher     |   23.000.000     |
-    Piraquara II |     2008     |      Preencher     |   21.000.000     |
-    Rio Verde    |     199x     |      Preencher     |   Preencher      | 
+    Represas     | Inauguração  | Capacidade(m³)   |
+    ------------ | :----------: |  :-------------: |
+    Iraí         |     1998     |   Preencher      |
+    Passaúna     |     1986     |   Preencher      |
+    Piraquara I  |     1979     |   23.000.000     |
+    Piraquara II |     2008     |   21.000.000     |
     """
-    df_volume = {'Iraí':0,'Passaúna':0, 'Piraquara I':23, 'Piraquara II':21, 'Rio Verde':0}
+    df_volume = {'Iraí':0,'Passaúna':0, 'Piraquara I':23, 'Piraquara II':21}
     with col11:
+        st.markdown("""<p style = 'text-align: justify; color: #31333F;'>Nesta seção é possível encontrar uma análise temporal dos reservatórios
+         de abastecimento do Núcleo Urbano Central da RMC.</p>""", unsafe_allow_html=True)
         st.markdown(tabela, unsafe_allow_html=True)
     with col21:
-        st.markdown("Capacidade (m³) dos reservatórios de água:")
+        st.markdown("<p style = 'text-align: center; color: #31333F;'>Capacidade (m³) dos reservatórios de água: </p>", unsafe_allow_html=True)
         fig, ax = plt.subplots()
         ax.bar(df_volume.keys(), df_volume.values(), color="Maroon")
         st.pyplot(fig)
@@ -162,7 +162,8 @@ def reservatorios(titulo):
 
         if local == "Selecione":
             Map = geemap.Map(locate_control=True, add_google_map=False)
-            Map.add_styled_vector(ee_area_estudo, column="id" ,palette=palette, layer_name="Area de estudo", **vis_params_apa)
+            # Map.add_styled_vector(ee_area_estudo, column="id" ,palette=palette, layer_name="Area de estudo", **vis_params_apa)
+            Map.addLayer(ee_area_estudo, vis_params=vis_params_apa, name="NUC")
             imagem = ee.Image(colecao[year]).clip(ee_area_estudo)
             Map.addLayer(imagem, bandas, 'Imagem Landsat')
             # Map.add_styled_vector(ee_bairros, column="NOME" ,palette=palette, layer_name="Bairros Curitiba", **vis_params_apa)
