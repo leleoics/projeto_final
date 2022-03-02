@@ -1,7 +1,6 @@
 import streamlit as st
 from apps.maps import region
 
-
 def plot_gif(selection):
     if selection == 1:
         st.image("https://media.giphy.com/media/YLuFnx1KX7a0srNgc2/giphy.gif", width=480, caption="Série histórica da região de Curitiba. Fonte: Autor")
@@ -29,14 +28,16 @@ def inicio(title):
         plot_gif(2)
 
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    Este projeto está sendo desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
+    <b>- </b>Este projeto está sendo desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
     da Universidade Federal do Paraná.</p>
     <p  style='text-align: justify; color: #31333F;'>
-     - Objetivo: Desenvolver uma aplicação web com análises temporais sobre o desenvolvimento da Região Metropolitana 
+    <b>- Objetivo:</b> Desenvolver uma aplicação web com análises temporais sobre o desenvolvimento da Região Metropolitana 
      de Curitiba (RMC), analisando as Áreas de Preservação Permanentes (APPs) ao entorno das massas d'água, análises do 
      crescimento populacional e também análises sobre o abastecimento de água do Núcleo Urbano Central (NUC).</p>""", unsafe_allow_html=True)
-
-    if st.checkbox("Visualizar área de estudo") == 1:
+    
+    st.markdown("----")
+    st.markdown("<h5 style='text-align: center; color: #31333F;'> Mapa da área de estudo</h5>", unsafe_allow_html=True)
+    if st.checkbox("Visualizar mapa") == 1:
         region()
     st.markdown("----")
     st.markdown("Esta aplicação utiliza as ferramentas:\n")
@@ -50,21 +51,4 @@ def inicio(title):
     with col13:
         plot_image('Earth Engine')
  
-
-    # st.markdown("----")
-    # col21, col22, col23, col24 = st.columns([1, 1, 1, 1])
-    # with col21:
-    #     st.image(logo_ufpr, width=150)
-    # with col22:
-    #     st.markdown("**Universidade Federal do Paraná**")
-    #     link1="- [Página inicial](https://www.ufpr.br/portalufpr/)"
-    #     link2 ="- [Ciências da Terra](http://www.terra.ufpr.br/portal/)"
-    #     st.markdown(link1,unsafe_allow_html=True)
-    #     st.markdown(link2,unsafe_allow_html=True)
-    # with col23:
-    #     st.image(logo_cartografica, width=150)
-    # with col24:
-    #     st.markdown("**Engenharia Cartográfica e de Agrimensura**")
-    #     link3="- [Página inicial](http://www.cartografica.ufpr.br)"
-    #     st.markdown(link3,unsafe_allow_html=True)
     return

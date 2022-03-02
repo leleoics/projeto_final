@@ -46,7 +46,7 @@ if pagina == 'Barragens':
 
 if pagina == 'Análise populacional':
     st.markdown('Em desenvolvimento, utilizando o mapa da região de interesse por enquanto')
-    region(pagina)
+    # region(pagina)
 
 
 if pagina == 'Relatórios por ano':

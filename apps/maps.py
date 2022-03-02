@@ -20,14 +20,11 @@ def region():
     path_n = "./data/base/NUC_N.geojson"
     ee_NUC = geemap.geojson_to_ee(path_n)
     Map = geemap.Map(locate_control=True, add_google_map=False)
-    #'CartoDB.VoyagerNoLabels'
-    # 'SATELLITE'
     Map.add_basemap('CartoDB.VoyagerNoLabels')
     Map.setCenter(-49.2732, -25.4453, zoom = 9)
-    Map.add_styled_vector(ee_NUC, column="NM_MUN", palette=style_NUC, layer_name="Municípios do Núcleo Urbano Central")
-    Map.addLayer(ee_NUC_a, vis_params=style_area_nuc, name="Núcleo Urbano Central")
+    Map.add_styled_vector(ee_NUC, column="NM_MUN", palette=style_NUC, layer_name="Municípios do NUC")
+    Map.addLayer(ee_NUC_a, vis_params=style_area_nuc, name="NUC")
     Map.add_labels(ee_NUC, column="NM_MUN", font_size= "8pt", font_color="#1C1C1C", layer_name='Rótulos', font_weight="bold")
     Map.addLayerControl()
-    folium_static(Map, width=1000, height=600)  
+    folium_static(Map, width=1200, height=600)  
     return 
-
