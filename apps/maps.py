@@ -7,10 +7,9 @@ from apps.dam import folium_static
 
 
 @st.cache
-def region(titulo):
+def region():
     # Estilo da camada area NUC
     style_area_nuc = {'color': '#B22222', 'colorOpacity': 0.5, 'width': 4, 'lineType': 'dotted'}
-    color = '006633'
     # Estilo da camada da NUC
     rm = '#FDF5E6'
     rg = '#BC8F8F'
