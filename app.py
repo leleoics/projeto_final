@@ -1,6 +1,6 @@
 import streamlit as st
 from apps.home import inicio
-from apps.descriptions import sobre
+from apps.descriptions import area_interesse, sobre
 from apps.dam import reservatorios
 from apps.maps import region
 import ee
@@ -37,7 +37,7 @@ if pagina == 'Página Inícial':
     inicio(pagina)
 
 if pagina == 'Área de interesse':
-    region(pagina)
+    area_interesse(pagina)
 
 
 if pagina == 'Barragens':

@@ -1,6 +1,11 @@
 import streamlit as st
 
 
+def area_interesse(titulo):
+    st.title(titulo)
+    return
+
+
 def sobre(titulo):
     st.title(titulo)
     st.markdown("""

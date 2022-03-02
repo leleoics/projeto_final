@@ -5,8 +5,12 @@ import ee
 from apps.dam import folium_static
 
 
+
+@st.cache
 def region(titulo):
-    st.title(titulo)
+    # Estilo da camada area NUC
+    style_area_nuc = {'color': '#B22222', 'colorOpacity': 0.5, 'width': 4, 'lineType': 'dotted'}
+    color = '006633'
     # Estilo da camada da NUC
     rm = '#FDF5E6'
     rg = '#BC8F8F'
@@ -14,16 +18,19 @@ def region(titulo):
                 "Colombo": rm, "Fazenda Rio Grande": rm, "Itaperuçu": rm, "Pinhais": rm, "Piraquara": rm, "Quatro Barras": rm, 
                 "Rio Branco do Sul": rm, "São José dos Pinhais": rm, "Curitiba": rg}
     # Carregando geojson
-    path = "./data/base/NUC_N.geojson"
-    ee_NUC = geemap.geojson_to_ee(path)
+    path_a = "./data/base/NUC_A.geojson"
+    ee_NUC_a = geemap.geojson_to_ee(path_a)
+    path_n = "./data/base/NUC_N.geojson"
+    ee_NUC = geemap.geojson_to_ee(path_n)
     Map = geemap.Map(locate_control=True, add_google_map=False)
     #'CartoDB.VoyagerNoLabels'
     # 'SATELLITE'
     Map.add_basemap('CartoDB.VoyagerNoLabels')
     Map.setCenter(-49.2732, -25.4453, zoom = 9)
     Map.add_styled_vector(ee_NUC, column="NM_MUN", palette=style_NUC, layer_name="Municípios do Núcleo Urbano Central")
+    Map.addLayer(ee_NUC_a, vis_params=style_area_nuc, name="Núcleo Urbano Central")
     Map.add_labels(ee_NUC, column="NM_MUN", font_size= "8pt", font_color="#1C1C1C", layer_name='Rótulos', font_weight="bold")
     Map.addLayerControl()
-    folium_static(Map)   
+    folium_static(Map, width=1000, height=600)   
     return
 
