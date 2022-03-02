@@ -30,23 +30,21 @@ def plot_image(selection):
 
 def inicio(title):
     st.title(title)
-    st.info("""
-    Esta é uma aplicação em desenvolvimento como projeto final do curso de Engenharia Cartografica e de Agrimensura 
-    da Universidade Federal do Paraná.   
-            """)
+
     col01, col02 = st.columns([1, 1])
     with col01:
         plot_gif(1)
     with col02:
         plot_gif(2)
 
-    st.markdown("""
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
     Este projeto está sendo desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
-    da Universidade Federal do Paraná. O objetivo é desenvolver uma aplicação web com análises temporais sobre o 
-    desenvolvimento da cidade de Curitiba e região metropolitana, analisando as Áreas de Preservação Permanentes (APPs) 
-    ao entorno das massas d'água, análises do crescimento populacional e também análises sobre o abastecimento de água 
-    do Núcleo Urbano Central (NUC).\n
-    """)
+    da Universidade Federal do Paraná.</p>
+    <p  style='text-align: justify; color: #31333F;'>
+     - Objetivo: Desenvolver uma aplicação web com análises temporais sobre o desenvolvimento da Região Metropolitana 
+     de Curitiba (RMC), analisando as Áreas de Preservação Permanentes (APPs) ao entorno das massas d'água, análises do 
+     crescimento populacional e também análises sobre o abastecimento de água do Núcleo Urbano Central (NUC).</p>""", unsafe_allow_html=True)
+
     if st.checkbox("Visualizar área de estudo") == 1:
         region()
     st.markdown("----")
