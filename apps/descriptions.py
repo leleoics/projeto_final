@@ -9,7 +9,8 @@ def area_interesse(titulo):
     Campo Largo, Campo Magro, Colombo, Curitiba, Fazenda Rio Grande, Itaperuçu, Pinhais, Piraquara, Quatro Barras, 
     Rio Branco do Sul e São José dos Pinhais.
     """)
-    region()
+    if st.checkbox("Visualizar mapa da área de estudo:") == 1:
+        region()
     return
 
 
