@@ -18,7 +18,7 @@ def region():
     path_a = "./data/base/NUC_A.geojson"
     ee_NUC_a = geemap.geojson_to_ee(path_a)
     path_n = "./data/base/NUC_N.geojson"
-    ee_NUC = geemap.geojson_to_ee(path_n)
+    ee_NUC = ee.FeatureCollection('users/leonardocartografica/NUC_MUN')
     Map = geemap.Map(locate_control=True, add_google_map=False)
     Map.add_basemap('CartoDB.VoyagerNoLabels')
     Map.setCenter(-49.2732, -25.4453, zoom = 9)
