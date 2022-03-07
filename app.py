@@ -2,7 +2,7 @@ import streamlit as st
 from apps.home import inicio
 from apps.descriptions import area_interesse, sobre
 from apps.dam import reservatorios
-from apps.maps import region
+from apps.classify import params_classify
 import ee
 from PIL import Image
 
@@ -30,23 +30,25 @@ menu = st.expander('Ver Menu')
 with menu:
     pagina = st.radio(
     "Selecione a página: ",
-    ('Página Inícial', 'Área de interesse', 'Barragens', 'Análise populacional', 'Relatórios por ano', 'Metadados', 'Sobre'))
+    ('Página Inícial', 'Classificador', 'Área de interesse', 'Barragens', 'Relatórios por ano', 'Metadados', 'Sobre'))
 
 st.markdown("----")
 if pagina == 'Página Inícial':
     inicio(pagina)
 
+
+if pagina == 'Classificador':
+    params_classify()
+
+
 if pagina == 'Área de interesse':
     area_interesse(pagina)
+    st.write('Apresentar dados de ibge, outros tipos de dados disponíveis para a região')
 
 
 if pagina == 'Barragens':
     reservatorios(pagina)
-
-
-if pagina == 'Análise populacional':
-    st.markdown('Em desenvolvimento, utilizando o mapa da região de interesse por enquanto')
-    # region(pagina)
+    st.write('Aba em standby, vendo se existe como calcular volume pelo SRTM')
 
 
 if pagina == 'Relatórios por ano':
