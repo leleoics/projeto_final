@@ -43,23 +43,50 @@ def params_classify():
             decoder = json.loads(a.decode('utf-8'))
             coord = decoder['features'][0]['geometry']['coordinates']
             geometry = ee.Geometry.Polygon(coord)
-            Map.add_layer(geometry, name='Área de estudo')
+            Map.addLayer(geometry, name='Área de estudo')
             Map.center_object(geometry)
-            Map.add_layer_control()
             colecoes = {
             'LANDSAT 08':'LANDSAT/LC08/C01/T1_TOA',
             'LANDSAT 05': 'LANDSAT/LT05/C01/T1_TOA',                   
             }
             satellite = st.selectbox('Selecione o Satélite: ', colecoes.keys())
+            if satellite == 'LANDSAT 08':
+                        bandas_combination = {
+                            'Cor Natural': 'B4,B3,B2',
+                            'Falsa Cor (Urbano)': 'B7,B6,B4',
+                            'Infravermelho (vegetação)': 'B5,B4,B3',
+                            'Agricultura': 'B6,B5,B2',
+                            'Penetração atmosférica': 'B7,B6,B5',
+                            'Saúde Vegetal': 'B5,B6,B2',
+                            'Terra/Água': 'B5,B6,B4',
+                            'Saúde Vegetal': 'B5,B6,B2',
+                            'Natural com Atmosfera removida': 'B7,B5,B3',
+                            'Infravermelho Curto': 'B7,B5,B4',
+                            'Análise de Vegetação': 'B6,B5,B4',
+                            }
+            if satellite == 'LANDSAT 05':
+                        bandas_combination = {
+                            'Cor Natural': 'B4,B3,B2',
+                            'Falsa Cor (Urbano)': 'B7,B6,B4',
+                            'Infravermelho (vegetação)': 'B5,B4,B3',
+                            'Agricultura': 'B6,B5,B2',
+                            'Penetração atmosférica': 'B7,B6,B5',
+                            'Saúde Vegetal': 'B5,B6,B2',
+                            'Terra/Água': 'B5,B6,B4',
+                            'Saúde Vegetal': 'B5,B6,B2',
+                            'Natural com Atmosfera removida': 'B7,B5,B3',
+                            'Infravermelho Curto': 'B7,B5,B4',
+                            'Análise de Vegetação': 'B6,B5,B4',
+                            }
             today = str(datetime.today().strftime('%Y-%m-%d'))
-            date_start = str(st.date_input('Data inicial: '))
-            date_end = str(st.date_input('Data final: '))
+            date_start = str(st.date_input('Selecione a data inicial: '))
+            date_end = str(st.date_input('Selecione a data final: '))
             if date_start != today:
                 date_range = (date_start, date_end)
                 collection = ee.ImageCollection(colecoes[satellite]).filterMetadata('CLOUD_COVER', 'less_than', 2).filterDate(date_range[0], date_range[1]).filterBounds(geometry)
                 features = collection.getInfo()
                 length = len(features['features'])
-                st.write('Quantidade de Imagens: ', length)
+                st.write('Quantidade de Imagens disponíveis: ', length)
                 ids, dates = [], []
                 for i in range(0, (length)):
                     name = features['features'][i]['id']
@@ -68,13 +95,22 @@ def params_classify():
                     ids.append(name)                                        
                     dates.append(date)
                 dates = ['Selecione'] + remove_duplicates_list(dates)
-                if st.selectbox('Datas disponíveis:', dates) != 'Selecione':                           
-                    with st.expander('Visualize a data das imagens: '):
-                        st.write('Id das imagens: ', ids)
+                date = st.selectbox('Datas disponíveis:', dates)
+                if date != 'Selecione':
+                    date_r =  date[-4:] + date[-7:-5] + date[-10:-8]
+                    select_ids = []
+                    for id in ids:
+                        if date_r in id:
+                            select_ids.append(id)
+                    select = st.selectbox('Selecione o ID da imagem para carregar no mapa', select_ids)    
+                    image = ee.Image(select)
+                    combination = st.selectbox('Selecione a combinação de bandas: ', bandas_combination.keys())
+                    Map.addLayer(image, bandas_combination[combination], name ='Imagem orbital')
+                    Map.add_layer_control()
 
 
     with colB:
         folium_static(Map, width=800, height=600)
-    # Ver possibilidade de retornar os parâmetros de geometria para realiar operações no GEE
 
+    
     return params
