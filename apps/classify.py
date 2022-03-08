@@ -112,6 +112,21 @@ def params_classify():
 
     with colB:
         folium_static(Map, width=800, height=600)
-
-    
+        texto = """<p  style='text-align: justify; color: #31333F;'>
+                        Informações do Landsat 8:\n</p>
+                        <p  style='text-align: justify; color: #31333F;'>  
+                        <b>- </b>Lançamento: 11 de fevereiro de 2013;\n</p>
+                        <p  style='text-align: justify; color: #31333F;'> 
+                        <b>- </b>Status: Operacional;\n</p>
+                        <p  style='text-align: justify; color: #31333F;'>
+                        <b>- </b>Sensores: OLI, TIRS;\n</p>
+                        <p  style='text-align: justify; color: #31333F;'>
+                        <b>- </b>Altitude: 705 km;\n</p>
+                        <p  style='text-align: justify; color: #31333F;'>
+                        <b>- </b>Inclinação: 98,2°;\n</p>
+                        <p  style='text-align: justify; color: #31333F;'>
+                        <b>- </b>Tempo de revisita: 16 dias.</p>           
+                """
+        with st.expander("Visualizar dados do satélite:"):
+            st.markdown(texto, unsafe_allow_html=True)
     return params
