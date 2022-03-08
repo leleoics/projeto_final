@@ -53,16 +53,15 @@ def params_classify():
             if satellite == 'LANDSAT 08':
                         bandas_combination = {
                             'Cor Natural': 'B4,B3,B2',
-                            'Falsa Cor (Urbano)': 'B7,B6,B4',
-                            'Infravermelho (vegetação)': 'B5,B4,B3',
-                            'Agricultura': 'B6,B5,B2',
-                            'Penetração atmosférica': 'B7,B6,B5',
-                            'Saúde Vegetal': 'B5,B6,B2',
                             'Terra/Água': 'B5,B6,B4',
-                            'Saúde Vegetal': 'B5,B6,B2',
                             'Natural com Atmosfera removida': 'B7,B5,B3',
-                            'Infravermelho Curto': 'B7,B5,B4',
+                            'Agricultura': 'B6,B5,B2',
+                            'Saúde Vegetal': 'B5,B6,B2',
                             'Análise de Vegetação': 'B6,B5,B4',
+                            'Infravermelho (vegetação)': 'B5,B4,B3',
+                            'Falsa Cor (Urbano)': 'B7,B6,B4',                                                        
+                            'Penetração atmosférica': 'B7,B6,B5',                    
+                            'Infravermelho Curto': 'B7,B5,B4',                            
                             }
             if satellite == 'LANDSAT 05':
                         bandas_combination = {
