@@ -30,11 +30,11 @@ def inicio(title):
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
     <b>- </b>Este projeto está sendo desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
     da Universidade Federal do Paraná.</p>
-    <p  style='text-align: justify; color: #31333F;'>
-    <b>- Objetivo:</b> Desenvolver uma aplicação web com análises temporais sobre o desenvolvimento da Região Metropolitana 
-     de Curitiba (RMC), analisando as Áreas de Preservação Permanentes (APPs) ao entorno das massas d'água, análises do 
-     crescimento populacional e também análises sobre o abastecimento de água do Núcleo Urbano Central (NUC).</p>""", unsafe_allow_html=True)
-    
+    """, unsafe_allow_html=True)
+    # <p  style='text-align: justify; color: #31333F;'>
+    # <b>- Objetivo:</b> Desenvolver uma aplicação web com análises temporais sobre o desenvolvimento da Região Metropolitana 
+    #  de Curitiba (RMC), analisando as Áreas de Preservação Permanentes (APPs) ao entorno das massas d'água, análises do 
+    #  crescimento populacional e também análises sobre o abastecimento de água do Núcleo Urbano Central (NUC).</p>
     st.markdown("----")
     st.markdown("<h5 style='text-align: center; color: #31333F;'> Mapa da área de estudo</h5>", unsafe_allow_html=True)
     if st.checkbox("Visualizar mapa") == 1:

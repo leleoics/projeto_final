@@ -24,6 +24,6 @@ def sobre(titulo):
     **Instituição:** Universidade Federal do Paraná\n
     **Linkedin:** https://www.linkedin.com/in/leonardo-oliveira-melo-287593164/\n
     **GitHub:** https://github.com/leleoics\n
-    **Projeto:** Desenvolver aplicação interativa com estudos da região imediata de Curitba\n    
+    **Projeto:** Desenvolver aplicação interativa com dados geográficos e de sensoriamento remoto\n    
     **Status:** Em desenvolvimento    
     """)

@@ -105,7 +105,8 @@ def params_classify():
                     select = st.selectbox('Selecione o ID da imagem para carregar no mapa', select_ids)    
                     image = ee.Image(select)
                     combination = st.selectbox('Selecione a combinação de bandas: ', bandas_combination.keys())
-                    Map.addLayer(image, bandas_combination[combination], name ='Imagem orbital')
+                    bands = {'bands': bandas_combination[combination]}
+                    Map.addLayer(image, bands, name ='Imagem orbital')
                     Map.add_layer_control()
 
 

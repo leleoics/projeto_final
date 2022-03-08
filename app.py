@@ -30,18 +30,18 @@ menu = st.expander('Ver Menu')
 with menu:
     pagina = st.radio(
     "Selecione a página: ",
-    ('Página Inícial', 'Classificador', 'Área de interesse', 'Barragens', 'Relatórios por ano', 'Metadados', 'Sobre'))
+    ('Página Inícial', 'Área de interesse', 'Sobre'))
 
 st.markdown("----")
 if pagina == 'Página Inícial':
     inicio(pagina)
 
 
-if pagina == 'Classificador':
+if pagina == 'Área de interesse':
     params_classify()
 
 
-if pagina == 'Área de interesse':
+if pagina == 'Área de interesse2':
     area_interesse(pagina)
     st.write('Apresentar dados de ibge, outros tipos de dados disponíveis para a região')
 
