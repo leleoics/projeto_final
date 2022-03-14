@@ -1,6 +1,6 @@
 # Projeto Final
 
-Este projeto está sendo desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, da Universidade Federal do Paraná. O objetivo é desenvolver uma aplicação web com análises temporais sobre o desenvolvimento da cidade de Curitiba e região metropolitana, analisando as Áreas de Preservação Permanentes (APPs) ao entorno das massas d'água, análises do crescimento populacional e também análises sobre o abastecimento de água do Núcleo Urbano Central (NUC).
+Este projeto tem o intuíto de disponibilizar aos usuários uma plataforma de Sensoriamento Remoto, onde se possam baixar imagens orbitais de sensores, realizar operações nas imagens(classificação, série temporal, etc). O objetivo da plataforma é disponibilizar a sociedade de forma a aproximar as ferramentas do sensoriamento remoto a pessoas sem o conhecimento técnico necessário para aplicar essas operações. 
 
 ## 🛠️ Construído com
 
