@@ -84,7 +84,12 @@ def parametros():
                                     if select != 'Selecione':
                                         Map.addLayer(image, bands, name=select)
                                         Map.addLayerControl()
-                
+
+                        if satelite == 'SENTINEL':
+                            dataset, visualization =  copernicus(geometry, date_range)
+                            Map.addLayer(dataset, visualization, name = 'Coleção Copernicus')
+                            Map.addLayer(geometry, name='Área importada')
+                            Map.addLayerControl()
 
 
     with colB:

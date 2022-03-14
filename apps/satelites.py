@@ -59,6 +59,7 @@ def landsat(geometry, date_range):
         dates = ['Selecione'] + remove_duplicates_list(dates)
         date_r =  date[-4:] + date[-7:-5] + date[-10:-8]
         select_ids = []
+        # Arrumar essa parte depois! Esta puxando apenas o primeiro valor
         for id in ids:
             if date_r in id:
                 select_ids.append(id)
