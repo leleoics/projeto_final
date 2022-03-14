@@ -1,8 +1,7 @@
 import streamlit as st
 from apps.home import inicio
-from apps.descriptions import area_interesse, sobre
-from apps.dam import reservatorios
-from apps.classify import params_classify
+from apps.descriptions import sobre
+from apps.selector import parametros
 import ee
 from PIL import Image
 
@@ -30,35 +29,15 @@ menu = st.expander('Ver Menu')
 with menu:
     pagina = st.radio(
     "Selecione a página: ",
-    ('Página Inícial', 'Área de interesse', 'Sobre'))
+    ('Página Inícial', 'Aplicação', 'Sobre'))
 
 st.markdown("----")
 if pagina == 'Página Inícial':
     inicio(pagina)
 
 
-if pagina == 'Área de interesse':
-    params_classify()
-
-
-if pagina == 'Área de interesse2':
-    area_interesse(pagina)
-    st.write('Apresentar dados de ibge, outros tipos de dados disponíveis para a região')
-
-
-if pagina == 'Barragens':
-    reservatorios(pagina)
-    st.write('Aba em standby, vendo se existe como calcular volume pelo SRTM')
-
-
-if pagina == 'Relatórios por ano':
-    st.markdown("Em desenvolvimento")
-    st.markdown("Aqui será possível visualizar análises e baixar um relatório pdf com as informações de cada ano")
-
-
-if pagina == 'Metadados':
-    st.markdown("Em desenvolvimento")
-    st.markdown("Aqui será possível visualizar os metadados e baixar e, pdf.")
+if pagina == 'Aplicação':
+    parametros()
 
 
 if pagina == 'Sobre':

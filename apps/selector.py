@@ -4,15 +4,15 @@ import folium
 import json
 import ee
 from datetime import datetime
-from apps.dam import folium_static
+from apps.old.dam import folium_static
+from apps.satelites import copernicus, landsat
 
 
-def remove_duplicates_list(x):
-  return list(dict.fromkeys(x))
-
-
-def params_classify():
-    params = dict()
+def parametros():
+    """
+    Esta função carrega os parâmetros para realizar as operações futuras com as imagens, o usuário interage através da aplicação
+    e retorna uma imagem da coleção desejada.
+    """
     colA, colB = st.columns([1,2]) 
     with colA:
         Map = geemap.Map(locate_control=True,
@@ -46,12 +46,14 @@ def params_classify():
             Map.addLayer(geometry, name='Área de estudo')
             Map.center_object(geometry)
             colecoes = {
-            'LANDSAT 08':'LANDSAT/LC08/C01/T1_TOA',
-            'LANDSAT 05': 'LANDSAT/LT05/C01/T1_TOA',                   
+            'Selecione' : '',
+            'LANDSAT': 'LANDSAT/LC08/C01/T1_TOA',
+            'MODIS': 'MODIS/006/MOD09GQ',                   
+            'SENTINEL': 'COPERNICUS/S2_SR'                  
             }
-            satellite = st.selectbox('Selecione o Satélite: ', colecoes.keys())
-            if satellite == 'LANDSAT 08':
-                        bandas_combination = {
+            satelite = st.selectbox('Selecione o Satélite: ', colecoes.keys())
+            bandas_combination = {
+                            'Selecione': '',
                             'Cor Natural': 'B4,B3,B2',
                             'Terra/Água': 'B5,B6,B4',
                             'Natural com Atmosfera removida': 'B7,B5,B3',
@@ -63,50 +65,26 @@ def params_classify():
                             'Penetração atmosférica': 'B7,B6,B5',                    
                             'Infravermelho Curto': 'B7,B5,B4',                            
                             }
-            if satellite == 'LANDSAT 05':
-                        bandas_combination = {
-                            'Cor Natural': 'B4,B3,B2',
-                            'Falsa Cor (Urbano)': 'B7,B6,B4',
-                            'Infravermelho (vegetação)': 'B5,B4,B3',
-                            'Agricultura': 'B6,B5,B2',
-                            'Penetração atmosférica': 'B7,B6,B5',
-                            'Saúde Vegetal': 'B5,B6,B2',
-                            'Terra/Água': 'B5,B6,B4',
-                            'Saúde Vegetal': 'B5,B6,B2',
-                            'Natural com Atmosfera removida': 'B7,B5,B3',
-                            'Infravermelho Curto': 'B7,B5,B4',
-                            'Análise de Vegetação': 'B6,B5,B4',
-                            }
-            today = str(datetime.today().strftime('%Y-%m-%d'))
-            date_start = str(st.date_input('Selecione a data inicial: '))
-            date_end = str(st.date_input('Selecione a data final: '))
-            if date_start != today:
-                date_range = (date_start, date_end)
-                collection = ee.ImageCollection(colecoes[satellite]).filterMetadata('CLOUD_COVER', 'less_than', 2).filterDate(date_range[0], date_range[1]).filterBounds(geometry)
-                features = collection.getInfo()
-                length = len(features['features'])
-                st.write('Quantidade de Imagens disponíveis: ', length)
-                ids, dates = [], []
-                for i in range(0, (length)):
-                    name = features['features'][i]['id']
-                    # date = name[-8:-4] + '-' + name[-4:-2] + '-' + name[-2:]
-                    date = name[-2:] + '/' + name[-4:-2] + '/' + name[-8:-4]
-                    ids.append(name)                                        
-                    dates.append(date)
-                dates = ['Selecione'] + remove_duplicates_list(dates)
-                date = st.selectbox('Datas disponíveis:', dates)
-                if date != 'Selecione':
-                    date_r =  date[-4:] + date[-7:-5] + date[-10:-8]
-                    select_ids = []
-                    for id in ids:
-                        if date_r in id:
-                            select_ids.append(id)
-                    select = st.selectbox('Selecione o ID da imagem para carregar no mapa', select_ids)    
-                    image = ee.Image(select)
-                    combination = st.selectbox('Selecione a combinação de bandas: ', bandas_combination.keys())
-                    bands = {'bands': bandas_combination[combination]}
-                    Map.addLayer(image, bands, name ='Imagem orbital')
-                    Map.add_layer_control()
+            if satelite != 'Selecione':
+                combination = st.selectbox('Selecione a combinação de bandas: ', bandas_combination.keys())
+                bands = {'bands': bandas_combination[combination]}
+                if combination != 'Selecione':
+                    today = str(datetime.today().strftime('%Y-%m-%d'))
+                    date_start = str(st.date_input('Selecione a data (inicial): '))
+                    if date_start != today:
+                        date_end = str(st.date_input('Selecione a data (final): '))
+                        date_range = (date_start, date_end)
+                        if satelite == 'LANDSAT':
+                            length, dates, ids = landsat(geometry, date_range, )
+                            st.write('Quantidade de Imagens disponíveis: ', length)
+                            date = st.selectbox('Datas disponíveis:', dates)
+                            if date != 'Selecione':
+                                    select = st.selectbox('Selecione o ID da imagem para carregar no mapa', ['Selecione'] + ids)    
+                                    image = ee.Image(select)
+                                    if select != 'Selecione':
+                                        Map.addLayer(image, bands, name=select)
+                                        Map.addLayerControl()
+                
 
 
     with colB:
@@ -128,4 +106,4 @@ def params_classify():
                 """
         with st.expander("Visualizar dados do satélite:"):
             st.markdown(texto, unsafe_allow_html=True)
-    return params
+    return 
