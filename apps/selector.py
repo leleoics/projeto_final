@@ -5,7 +5,7 @@ import json
 import ee
 from datetime import datetime
 from apps.old.dam import folium_static
-from apps.satelites import copernicus, landsat
+from apps.satelites import copernicus, landsat8, landsat9, ndvi
 
 
 def parametros():
@@ -47,11 +47,12 @@ def parametros():
             Map.center_object(geometry)
             colecoes = {
             'Selecione' : '',
-            'LANDSAT': 'LANDSAT/LC08/C01/T1_TOA',
-            'MODIS': 'MODIS/006/MOD09GQ',                   
-            'SENTINEL': 'COPERNICUS/S2_SR'                  
+            'LANDSAT 08': 'LANDSAT/LC08/C01/T1_TOA',
+            'LANDSAT 09': 'LANDSAT/LC09/C02/T1_TOA',           
+            'SENTINEL': 'COPERNICUS/S2_SR',                  
+            'NDVI': 'NASA/GIMMS/3GV0'                  
             }
-            satelite = st.selectbox('Selecione o Satélite: ', colecoes.keys())
+            satelite = st.multiselect('Selecione o Satélite: ', colecoes.keys())
             bandas_combination = {
                             'Selecione': '',
                             'Cor Natural': 'B4,B3,B2',
@@ -74,22 +75,39 @@ def parametros():
                     if date_start != today:
                         date_end = str(st.date_input('Selecione a data (final): '))
                         date_range = (date_start, date_end)
-                        if satelite == 'LANDSAT':
-                            length, dates, ids = landsat(geometry, date_range, )
-                            st.write('Quantidade de Imagens disponíveis: ', length)
-                            date = st.selectbox('Datas disponíveis:', dates)
-                            if date != 'Selecione':
-                                    select = st.selectbox('Selecione o ID da imagem para carregar no mapa', ['Selecione'] + ids)    
-                                    image = ee.Image(select)
-                                    if select != 'Selecione':
-                                        Map.addLayer(image, bands, name=select)
-                                        Map.addLayerControl()
+                        # if satelite == 'LANDSAT 08':
+                        #     length, dates, ids = landsat8(geometry, date_range, )
+                        #     st.write('Quantidade de Imagens disponíveis: ', length)
+                        #     date = st.selectbox('Datas disponíveis:', dates)
+                        #     if date != 'Selecione':
+                        #             select = st.selectbox('Selecione o ID da imagem para carregar no mapa', ['Selecione'] + ids)    
+                        #             image = ee.Image(select)
+                        #             if select != 'Selecione':
+                        #                 Map.addLayer(image, bands, name=select)
+                        #                 Map.addLayerControl()
 
-                        if satelite == 'SENTINEL':
+                        if 'LANDSAT 08' in satelite:
+                            dataset, visualization =  landsat8(geometry, date_range)
+                            Map.addLayer(dataset, visualization, name = 'Coleção Landsat 08')
+                            Map.addLayer(geometry, name='Área importada')
+                            
+
+                        if 'LANDSAT 09' in satelite:
+                            dataset, visualization =  landsat9(geometry, date_range)
+                            Map.addLayer(dataset, visualization, name = 'Coleção Landsat 09')
+                            Map.addLayer(geometry, name='Área importada')
+                            
+
+                        if 'SENTINEL' in satelite:
                             dataset, visualization =  copernicus(geometry, date_range)
                             Map.addLayer(dataset, visualization, name = 'Coleção Copernicus')
-                            Map.addLayer(geometry, name='Área importada')
-                            Map.addLayerControl()
+
+
+                        if 'NDVI' in satelite:
+                            dataset, visualization =  ndvi(date_range)
+                            Map.addLayer(dataset, visualization, name = 'NDVI')
+
+                        Map.addLayerControl()
 
 
     with colB:
