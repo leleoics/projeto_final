@@ -20,6 +20,9 @@ def parametros():
             basemap='SATELLITE',
             plugin_Draw=True,
             draw_export=True)
+        mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021")
+        Map.addLayer(mun, name='Estados do Brasil')
+        Map.addLayerControl()
         keyword = st.text_input("Digite o nome do local:", "")
         if keyword:
             locations = geemap.geocode(keyword)
