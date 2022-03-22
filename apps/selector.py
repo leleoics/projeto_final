@@ -8,38 +8,100 @@ from apps.old.dam import folium_static
 from apps.satelites import copernicus, landsat8, landsat9, ndvi
 
 
+
+def geolocator():
+    """
+    Esta função retorna um marcador para a aplicação.
+    """
+    keyword = st.text_input("Digite o nome do local:", "")
+    if keyword:
+        locations = geemap.geocode(keyword)
+        if locations is not None and len(locations) > 0:
+            str_locations = [str(g)[1:-1] for g in locations]
+            location = st.selectbox("Selecione o local desejado:", str_locations)
+            loc_index = str_locations.index(location)
+            selected_loc = locations[loc_index]
+            lat, lon = selected_loc.lat, selected_loc.lng
+            marker = folium.Marker(location=[lat,lon],
+                popup=location,
+                icon=folium.Icon(color='red', 
+                icon='info-sign'))
+            if marker is not None:
+                return marker, lon, lat
+            else:
+                return
+
 def parametros():
     """
     Esta função carrega os parâmetros para realizar as operações futuras com as imagens, o usuário interage através da aplicação
     e retorna uma imagem da coleção desejada.
     """
-    colA, colB = st.columns([1,2]) 
-    with colA:
-        Map = geemap.Map(locate_control=True,
-            add_google_map=False,
-            basemap='SATELLITE',
-            plugin_Draw=True,
-            draw_export=True)
-        mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021")
-        Map.addLayer(mun, name='Estados do Brasil')
-        Map.addLayerControl()
-        keyword = st.text_input("Digite o nome do local:", "")
-        if keyword:
-            locations = geemap.geocode(keyword)
-            if locations is not None and len(locations) > 0:
-                str_locations = [str(g)[1:-1] for g in locations]
-                location = st.selectbox("Selecione o local desejado:", str_locations)
-                loc_index = str_locations.index(location)
-                selected_loc = locations[loc_index]
-                lat, lon = selected_loc.lat, selected_loc.lng
-                folium.Marker(location=[lat,lon],
-                 popup=location,
-                 icon=folium.Icon(color='red', 
-                 icon='info-sign')).add_to(Map)
-                Map.set_center(lon, lat, zoom=11)
+    Map = geemap.Map(locate_control=True,
+    add_google_map=False,
+    basemap='SATELLITE',
+    plugin_Draw=True,
+    draw_export=True)
+    Map.addLayerControl()
+
+
+    colA1, colB1 = st.columns([1,1]) 
+    with colA1:
+        st.markdown("""
+    <p  style='text-align: justify; color: #31333F;'>
+                        Esta ferramenta permite que seja realizado a detecção de alterações em uma área de interesse do usuário:\n</p>
+    <p  style='text-align: justify; color: #31333F;'>
+                        Para isso, siga o passo a passo ao lado <b> -> </b>\n</p>
+    <p  style='text-align: justify; color: #31333F;'>
+                         </b>\n</p>
+    """, unsafe_allow_html=True)
+
+        marcador, lon, lat = geolocator()
+        if marcador is not None:
+            marcador.add_to(Map)
+            Map.set_center(lon, lat, zoom=11)
+
+    with colB1:
+        st.markdown("""
+    <p  style='text-align: justify; color: #31333F;'>
+                        <b> 1 - </b>Digite a localizaçao para centralizar o mapa:\n</p>
+    <p  style='text-align: justify; color: #31333F;'>
+                        <b> 2 - </b>Desenhe a área de interesse no mapa:\n</p>
+    <p  style='text-align: justify; color: #31333F;'>
+                        <b> 3 - </b>Exporte a área de interesse                 :\n</p>
+    <p  style='text-align: justify; color: #31333F;'>
+                        <b> 4 - </b>Faça o Upload do arquivo Geojson gerado     :\n</p>
+    """, unsafe_allow_html=True)
         uploaded_file = st.file_uploader("Faça upload do arquivo com a área desejada:", 
         type='GEOJSON', 
         accept_multiple_files=False)
+
+    colA2, colB2 = st.columns([1,2])
+    with colA2:
+        # Map = geemap.Map(locate_control=True,
+        #     add_google_map=False,
+        #     basemap='SATELLITE',
+        #     plugin_Draw=True,
+        #     draw_export=True)
+        # mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021")
+        # Map.addLayer(mun, name='Estados do Brasil')
+        # Map.addLayerControl()
+        # keyword = st.text_input("Digite o nome do local:", "")
+        # if keyword:
+        #     locations = geemap.geocode(keyword)
+        #     if locations is not None and len(locations) > 0:
+        #         str_locations = [str(g)[1:-1] for g in locations]
+        #         location = st.selectbox("Selecione o local desejado:", str_locations)
+        #         loc_index = str_locations.index(location)
+        #         selected_loc = locations[loc_index]
+        #         lat, lon = selected_loc.lat, selected_loc.lng
+        #         folium.Marker(location=[lat,lon],
+        #          popup=location,
+        #          icon=folium.Icon(color='red', 
+        #          icon='info-sign')).add_to(Map)
+        #         Map.set_center(lon, lat, zoom=11)
+        # uploaded_file = st.file_uploader("Faça upload do arquivo com a área desejada:", 
+        # type='GEOJSON', 
+        # accept_multiple_files=False)
         if uploaded_file is not None:
             bytes_data = uploaded_file.read()
             a= bytes_data
@@ -113,7 +175,7 @@ def parametros():
                         Map.addLayerControl()
 
 
-    with colB:
+    with colB2:
         folium_static(Map, width=800, height=600)
         texto = """<p  style='text-align: justify; color: #31333F;'>
                         Informações do Landsat 8:\n</p>
