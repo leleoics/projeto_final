@@ -18,9 +18,7 @@ def plot_image(selection):
         st.image("https://media.giphy.com/media/cjOSHYWOqfNwyLkRv8/giphy.gif", caption="Streamlit", width=80)
     return
 
-def inicio(title):
-    st.title(title)
-
+def inicio():
     col01, col02 = st.columns([1, 1])
     with col01:
         plot_gif(1)

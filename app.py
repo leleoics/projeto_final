@@ -10,7 +10,7 @@ from PIL import Image
 #- Ícone;
 #- Definido o layout wide;
 #- Barra lateral sempre aberta;
-logo = Image.open("./data/thumbnails/ufpr_b.jpg")
+logo = Image.open("./data/thumbnails/detec_thumb.png")
 st.set_page_config(
 page_title="TCC",
 page_icon=logo,
@@ -25,15 +25,28 @@ ee.Initialize(credentials)
 
 #CABEÇALHO COM ACESSO AOS APPs
 st.markdown("----")
-menu = st.expander('Ver Menu')
-with menu:
-    pagina = st.radio(
-    "Selecione a página: ",
-    ('Página Inícial', 'Aplicação', 'Sobre'))
+col01, col02, col03 = st.columns([1, 3, 1])
+with col01:
+    st.image(logo, width=90)
+with col02:
+    st.markdown("""
+    <h4  style='text-align: left; color: #31333F;'>
+    Detecção de mudança de séries temporais de imagens</h4>
+    """, unsafe_allow_html=True)
+with col03:
+    menu = st.expander('Ver Menu')
+    with menu:
+        pagina = st.radio(
+        "Selecione a página: ",
+        ('Página Inícial', 'Aplicação', 'Sobre'))
+    st.markdown("""
+    <h5  style='text-align: center; color: #31333F;'>
+    {}</h5>
+    """.format(pagina) , unsafe_allow_html=True)
 
 st.markdown("----")
 if pagina == 'Página Inícial':
-    inicio(pagina)
+    inicio()
 
 
 if pagina == 'Aplicação':
