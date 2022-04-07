@@ -9,11 +9,10 @@ from apps.satelites import copernicus, landsat8, landsat9, ndvi
 
 
 
-def geolocator():
+def geolocator(keyword):
     """
     Esta função retorna um marcador para a aplicação.
     """
-    keyword = st.text_input("Digite o nome do local:", "")
     if keyword:
         locations = geemap.geocode(keyword)
         if locations is not None and len(locations) > 0:
@@ -29,7 +28,8 @@ def geolocator():
             if marker is not None:
                 return marker, lon, lat
             else:
-                return
+                marker, lon, lat = None, None, None
+                return marker, lon, lat
 
 def parametros():
     """
@@ -54,11 +54,12 @@ def parametros():
     <p  style='text-align: justify; color: #31333F;'>
                          </b>\n</p>
     """, unsafe_allow_html=True)
-
-        marcador, lon, lat = geolocator()
-        if marcador is not None:
-            marcador.add_to(Map)
-            Map.set_center(lon, lat, zoom=11)
+        chave = st.text_input("Digite o nome do local:", "")
+        if chave:
+            marcador, lon, lat = geolocator(chave)
+            if marcador is not None:
+                marcador.add_to(Map)
+                Map.set_center(lon, lat, zoom=11)
 
     with colB1:
         st.markdown("""
@@ -77,11 +78,11 @@ def parametros():
 
     colA2, colB2 = st.columns([1,2])
     with colA2:
-        # Map = geemap.Map(locate_control=True,
-        #     add_google_map=False,
-        #     basemap='SATELLITE',
-        #     plugin_Draw=True,
-        #     draw_export=True)
+        Map = geemap.Map(locate_control=True,
+             add_google_map=False,
+             basemap='SATELLITE',
+             plugin_Draw=True,
+             draw_export=True)
         # mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021")
         # Map.addLayer(mun, name='Estados do Brasil')
         # Map.addLayerControl()
