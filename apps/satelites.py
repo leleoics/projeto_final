@@ -41,36 +41,37 @@ def remove_duplicates_list(x):
     return list(dict.fromkeys(x))
 
 
-# def landsat8(geometry, date_range):
-#     """
-#     Esta função seleciona imagens Landsat.
-#     Entrada: geometry: geometria, date_range: data inicial, data final.
-#     Saída: dataset: coleção de imagem, length: quantidade de imagens, dates: data das imagens, select_ids: identificadores
-#     """
-#     dataset = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA').filterMetadata('CLOUD_COVER', 'less_than', 2).filterDate(date_range[0], date_range[1]).filterBounds(geometry)
-#     features = dataset.getInfo()
-#     length = len(features['features'])
-#     ids, dates = [], []
-#     for i in range(0, (length)):
-#         name = features['features'][i]['id']
-#         date = name[-2:] + '/' + name[-4:-2] + '/' + name[-8:-4]
-#         ids.append(name)                                        
-#         dates.append(date)
-#         dates = ['Selecione'] + remove_duplicates_list(dates)
-#         date_r =  date[-4:] + date[-7:-5] + date[-10:-8]
-#         select_ids = []
-#         # Arrumar essa parte depois! Esta puxando apenas o primeiro valor
-#         for id in ids:
-#             if date_r in id:
-#                 select_ids.append(id)
-#     return length, dates, select_ids
 def landsat8(geometry, date_range):
+    """
+    Esta função seleciona imagens Landsat.
+    Entrada: geometry: geometria, date_range: data inicial, data final.
+    Saída: dataset: coleção de imagem, length: quantidade de imagens, dates: data das imagens, select_ids: identificadores
+    """
+    dataset = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA').filterMetadata('CLOUD_COVER', 'less_than', 2).filterDate(date_range[0], date_range[1]).filterBounds(geometry)
+    features = dataset.getInfo()
+    length = len(features['features'])
+    ids, dates = [], []
+    for i in range(0, (length)):
+        name = features['features'][i]['id']
+        date = name[-2:] + '/' + name[-4:-2] + '/' + name[-8:-4]
+        ids.append(name)                                        
+        dates.append(date)
+        dates = ['Selecione'] + remove_duplicates_list(dates)
+        date_r =  date[-4:] + date[-7:-5] + date[-10:-8]
+        select_ids = []
+        # Arrumar essa parte depois! Esta puxando apenas o primeiro valor
+        for id in ids:
+            if date_r in id:
+                select_ids.append(id)
+    return length, dates, select_ids
 
-    dataset = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA').filterDate(date_range[0], date_range[1]).filterMetadata('CLOUD_COVER', 'less_than', 2).filterBounds(geometry)
-    visualization = {'min': 0.0,
-                    'max': 0.3,
-                    'bands': ['B4', 'B3', 'B2']}
-    return dataset, visualization
+# def landsat8(geometry, date_range):
+
+#     dataset = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA').filterDate(date_range[0], date_range[1]).filterMetadata('CLOUD_COVER', 'less_than', 2).filterBounds(geometry)
+#     visualization = {'min': 0.0,
+#                     'max': 0.3,
+#                     'bands': ['B4', 'B3', 'B2']}
+#     return dataset, visualization
 
 def landsat9(geometry, date_range):
 

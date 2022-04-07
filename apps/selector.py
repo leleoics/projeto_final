@@ -111,72 +111,64 @@ def parametros():
             geometry = ee.Geometry.Polygon(coord)
             Map.addLayer(geometry, name='Área de estudo')
             Map.center_object(geometry)
-            colecoes = {
-            'Selecione' : '',
-            'LANDSAT 08': 'LANDSAT/LC08/C01/T1_TOA',
-            'LANDSAT 09': 'LANDSAT/LC09/C02/T1_TOA',           
-            'SENTINEL': 'COPERNICUS/S2_SR',                  
-            'NDVI': 'NASA/GIMMS/3GV0'                  
-            }
+            colecao = 'LANDSAT/LC08/C01/T1_TOA'                  
+            
             # Acho mais prudente retirar as opções de satélite e trabalhar apenas com Landsat por enquanto.
             # Retirar também a combinação de bandas, uma vez que apenas poderá ser utilizado o que se utiliza no método
-            # A não ser que seja por visualização apenas
-            satelite = st.multiselect('Selecione o Satélite: ', colecoes.keys())
-            bandas_combination = {
-                            'Selecione': '',
-                            'Cor Natural': 'B4,B3,B2',
-                            'Terra/Água': 'B5,B6,B4',
-                            'Natural com Atmosfera removida': 'B7,B5,B3',
-                            'Agricultura': 'B6,B5,B2',
-                            'Saúde Vegetal': 'B5,B6,B2',
-                            'Análise de Vegetação': 'B6,B5,B4',
-                            'Infravermelho (vegetação)': 'B5,B4,B3',
-                            'Falsa Cor (Urbano)': 'B7,B6,B4',                                                        
-                            'Penetração atmosférica': 'B7,B6,B5',                    
-                            'Infravermelho Curto': 'B7,B5,B4',                            
-                            }
-            if satelite != 'Selecione':
-                combination = st.selectbox('Selecione a combinação de bandas: ', bandas_combination.keys())
-                bands = {'bands': bandas_combination[combination]}
-                if combination != 'Selecione':
-                    today = str(datetime.today().strftime('%Y-%m-%d'))
-                    date_start = str(st.date_input('Selecione a data (inicial): '))
-                    if date_start != today:
-                        date_end = str(st.date_input('Selecione a data (final): '))
-                        date_range = (date_start, date_end)
-                        # if satelite == 'LANDSAT 08':
-                        #     length, dates, ids = landsat8(geometry, date_range, )
-                        #     st.write('Quantidade de Imagens disponíveis: ', length)
-                        #     date = st.selectbox('Datas disponíveis:', dates)
-                        #     if date != 'Selecione':
-                        #             select = st.selectbox('Selecione o ID da imagem para carregar no mapa', ['Selecione'] + ids)    
-                        #             image = ee.Image(select)
-                        #             if select != 'Selecione':
-                        #                 Map.addLayer(image, bands, name=select)
-                        #                 Map.addLayerControl()
+            # # A não ser que seja por visualização apenas
+            # satelite = st.multiselect('Selecione o Satélite: ', colecoes.keys())
+            # bandas_combination = {
+            #                 'Selecione': '',
+            #                 'Cor Natural': 'B4,B3,B2',
+            #                 'Terra/Água': 'B5,B6,B4',
+            #                 'Natural com Atmosfera removida': 'B7,B5,B3',
+            #                 'Agricultura': 'B6,B5,B2',
+            #                 'Saúde Vegetal': 'B5,B6,B2',
+            #                 'Análise de Vegetação': 'B6,B5,B4',
+            #                 'Infravermelho (vegetação)': 'B5,B4,B3',
+            #                 'Falsa Cor (Urbano)': 'B7,B6,B4',                                                        
+            #                 'Penetração atmosférica': 'B7,B6,B5',                    
+            #                 'Infravermelho Curto': 'B7,B5,B4',                            
+            #                 }
 
-                        if 'LANDSAT 08' in satelite:
-                            dataset, visualization =  landsat8(geometry, date_range)
-                            Map.addLayer(dataset, visualization, name = 'Coleção Landsat 08')
-                            Map.addLayer(geometry, name='Área importada')
+            today = str(datetime.today().strftime('%Y-%m-%d'))
+            date_start = str(st.date_input('Selecione a data (inicial): '))
+            if date_start != today:
+                date_end = str(st.date_input('Selecione a data (final): '))
+                date_range = (date_start, date_end)
+                length, dates, ids = landsat8(geometry, date_range, )
+                st.write('Quantidade de Imagens disponíveis: ', length)
+                date = st.selectbox('Datas disponíveis:', dates)
+                if date != 'Selecione':
+                        select = st.selectbox('Selecione o ID da imagem para carregar no mapa', ['Selecione'] + ids)    
+                        Pnir0 = ee.Image(select).select('B5')
+                        red0 = ee.Image(select).select('B2')
+                        if select != 'Selecione':
+                            Map.addLayer(Pnir0, name= 'Infravermelho Próximo - ' + date)
+                            Map.addLayer(red0, name='Vermelho - ' + date)
+                            Map.addLayerControl()
+
+                # dataset, visualization =  landsat8(geometry, date_range)
+                # Map.addLayer(dataset, visualization, name = 'Coleção Landsat 08')
+                # Map.addLayer(geometry, name='Área importada')
+                # Map.addLayerControl()    
+
+                        # if 'LANDSAT 09' in satelite:
+                        #     dataset, visualization =  landsat9(geometry, date_range)
+                        #     Map.addLayer(dataset, visualization, name = 'Coleção Landsat 09')
+                        #     Map.addLayer(geometry, name='Área importada')
                             
 
-                        if 'LANDSAT 09' in satelite:
-                            dataset, visualization =  landsat9(geometry, date_range)
-                            Map.addLayer(dataset, visualization, name = 'Coleção Landsat 09')
-                            Map.addLayer(geometry, name='Área importada')
-                            
-
-                        if 'SENTINEL' in satelite:
-                            dataset, visualization =  copernicus(geometry, date_range)
-                            Map.addLayer(dataset, visualization, name = 'Coleção Copernicus')
+                        # if 'SENTINEL' in satelite:
+                        #     dataset, visualization =  copernicus(geometry, date_range)
+                        #     Map.addLayer(dataset, visualization, name = 'Coleção Copernicus')
 
 
-                        if 'NDVI' in satelite:
-                            dataset, visualization =  ndvi(date_range)
-                            Map.addLayer(dataset, visualization, name = 'NDVI')
+                        # if 'NDVI' in satelite:
+                        #     dataset, visualization =  ndvi(date_range)
+                        #     Map.addLayer(dataset, visualization, name = 'NDVI')
 
-                        Map.addLayerControl()
+                        
 
 
     with colB2:
