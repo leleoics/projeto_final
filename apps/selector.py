@@ -118,6 +118,9 @@ def parametros():
             'SENTINEL': 'COPERNICUS/S2_SR',                  
             'NDVI': 'NASA/GIMMS/3GV0'                  
             }
+            # Acho mais prudente retirar as opções de satélite e trabalhar apenas com Landsat por enquanto.
+            # Retirar também a combinação de bandas, uma vez que apenas poderá ser utilizado o que se utiliza no método
+            # A não ser que seja por visualização apenas
             satelite = st.multiselect('Selecione o Satélite: ', colecoes.keys())
             bandas_combination = {
                             'Selecione': '',

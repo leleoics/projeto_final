@@ -1,6 +1,6 @@
 # Projeto Final
 
-Este projeto tem o intuíto de disponibilizar aos usuários uma plataforma de Sensoriamento Remoto, onde se possam baixar imagens orbitais de sensores, realizar operações nas imagens(classificação, série temporal, etc). O objetivo da plataforma é disponibilizar uma aplicação a sociedade de forma a aproximar as ferramentas do sensoriamento remoto a pessoas sem o conhecimento técnico necessário para aplicar essas operações. 
+Este projeto tem o intuíto de disponibilizar aos usuários uma plataforma de detecção de mudanças através de imagens orbitais. O usuário pode delimitar a região de estudo, e selecionar o fenômeno a ser estudado e as datas. A aplicação direciona o melhor método para cada fenômeno.
 
 ## 🛠️ Construído com
 
