@@ -16,20 +16,59 @@ def plot_image(selection):
         st.image("https://media.giphy.com/media/KSaNOvsbk0KdWkz7J9/giphy.gif", caption="GitHub", width=80)
     if selection == 'Streamlit':
         st.image("https://media.giphy.com/media/cjOSHYWOqfNwyLkRv8/giphy.gif", caption="Streamlit", width=80)
+    if selection == 'Detecção':
+        st.image("https://media.giphy.com/media/8XpXWrNtQsqzWjws6R/giphy.gif", width=140)
     return
 
 def inicio():
-    col01, col02 = st.columns([1, 1])
-    with col01:
-        plot_gif(1)
-    with col02:
-        plot_gif(2)
+    with st.expander('Ver mais:'):
+        col01, col02 = st.columns([1, 1])
+        with col01:
+            plot_gif(1)
+        with col02:
+            plot_gif(2)
 
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
     <b>- </b>Este projeto está sendo desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
     da Universidade Federal do Paraná.</p>
     """, unsafe_allow_html=True)
-    st.markdown("Esta aplicação utiliza as ferramentas:\n")
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+    <b>- </b>É uma ferramenta que permite detectar mudanças na superfície da terra 🌎 através de imagens orbitais.
+    </p>
+    """, unsafe_allow_html=True)
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+    <b>- </b>É possível detectar alterações entre duas épocas distintas de sua escolha.
+    </p>
+    """, unsafe_allow_html=True)
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+    <b>- </b> Disponível técnicas de detecção de mudanças para os seguintes fenômenos:
+    </p>
+    """, unsafe_allow_html=True)
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+    <b>- </b> Água 🌊
+    </p>
+    """, unsafe_allow_html=True)
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+    <b>- </b> Vegetação 🌳
+    </p>
+    """, unsafe_allow_html=True)
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+    <b>- </b> Urbanização 🌆
+    </p>
+    """, unsafe_allow_html=True)
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+    <b>- </b>Para ir para a aplicação seguir os seguintes passos:</p>""", unsafe_allow_html=True)
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+    🔼 Ver Menu
+    </p>
+    """, unsafe_allow_html=True)
+    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+    ⏬ Aplicação
+    </p>
+    """, unsafe_allow_html=True)
+    st.markdown("""<h6  style='text-align: center; color: #31333F;'>
+    Esta aplicação utiliza as ferramentas:
+    </h6>""", unsafe_allow_html=True)
     col11, col12, col13 = st.columns([2, 2, 1])
     with col11:
         plot_image('Github')

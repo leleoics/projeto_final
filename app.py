@@ -2,6 +2,7 @@ import streamlit as st
 from apps.home import inicio
 from apps.descriptions import sobre
 from apps.selector import parametros
+from apps.home import plot_image
 import ee
 from PIL import Image
 
@@ -12,7 +13,7 @@ from PIL import Image
 #- Barra lateral sempre aberta;
 logo = Image.open("./data/thumbnails/detec_thumb.png")
 st.set_page_config(
-page_title="TCC",
+page_title="Detector de Mudanças",
 page_icon=logo,
 layout="wide",
 menu_items={
@@ -27,7 +28,7 @@ ee.Initialize(credentials)
 st.markdown("----")
 col01, col02, col03 = st.columns([1, 3, 1])
 with col01:
-    st.image(logo, width=90)
+    plot_image('Detecção')
 with col02:
     st.markdown("""
     <h4  style='text-align: left; color: #31333F;'>

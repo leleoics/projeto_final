@@ -110,8 +110,8 @@ def parametros():
             decoder = json.loads(a.decode('utf-8'))
             coord = decoder['features'][0]['geometry']['coordinates']
             geometry = ee.Geometry.Polygon(coord)
-            Map.addLayer(geometry, name='Área de estudo')
-            Map.center_object(geometry)
+            # Map.addLayer(geometry, name='Área de interesse')
+            # Map.center_object(geometry)
                  
 
             # satelite = st.multiselect('Selecione o Satélite: ', colecoes.keys())
@@ -138,11 +138,12 @@ def parametros():
                 st.write('Quantidade de Imagens disponíveis nesse período: ', length)
                 st.markdown("""
                 <p  style='text-align: justify; color: #31333F;'>
-                    O satélite faz a revisita a cada 16 dias e existe uma filtragem de núvens, portanto as datas de imagens com 
-                    visibilidade na região mais próximas do período são:\n</p>
+                    O satélite faz a revisita a cada 16 dias e existe uma filtragem de núvens, portanto a depender do período definido,
+                     pode ser encontrado uma baixa quantidade de imagens. As datas de imagens com visibilidade na região mais próximas 
+                     do período definido são:\n</p>
                 <p  style='text-align: justify; color: #31333F;'>""", unsafe_allow_html=True)
-                st.markdown('-' + dates[0])
-                st.markdown('-' + dates[1])
+                st.markdown('- ' + dates[0])
+                st.markdown('- ' + dates[1])
                 # st.write(lis_ids) # Colocar em ver mais
                 Imgs = image_filter(dates, lis_ids)
                 img0 = Imgs[0]
@@ -162,9 +163,6 @@ def parametros():
                 Map.addLayer(NDVI_1, name= 'NDVI - ' + dates[1])
                 Map.addLayer(NDVI_detect, name= 'Detecção de mudanças - ' + dates[1])
 
-
-
-                Map.addLayerControl()
 
                 # dataset, visualization =  landsat8(geometry, date_range)
                 # Map.addLayer(dataset, visualization, name = 'Coleção Landsat 08')
