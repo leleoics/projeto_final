@@ -104,7 +104,9 @@ def parametros():
 
             today = str(datetime.today().strftime('%Y-%m-%d'))
             date_start = str(st.date_input('Selecione a data (inicial): '))
+            # criterio = 0
             if date_start != today:
+                criterio = 1
                 date_end = str(st.date_input('Selecione a data (final): '))
                 date_range = (date_start, date_end)
                 length, dates, lis_ids = landsat8(geometry, date_range)
@@ -121,38 +123,49 @@ def parametros():
                 Imgs = image_filter(dates, lis_ids)
                 img0 = Imgs[0]
                 img1 = Imgs[1]
-                # Map.addLayer(geometry, name='Área de interesse')
-                # Map.center_object(geometry)   
+
                 Pnir0 = ee.Image(img0).select('B5')
                 red0 = ee.Image(img0).select('B2')
                 Pnir1 = ee.Image(img1).select('B5')
                 red1 = ee.Image(img1).select('B2')
-                # Map.addLayer(Pnir0, name= 'Infravermelho Próximo - ' + dates[0])
-                # Map.addLayer(red0, name='Vermelho - ' + dates[0])
-                # Map.addLayer(Pnir1, name= 'Infravermelho Próximo - ' + dates[1])
-                # Map.addLayer(red1, name='Vermelho - ' + dates[1])
                 NDVI_0 = (Pnir0.subtract(red0)).divide(Pnir0.add(red0))
                 NDVI_1 = (Pnir1.subtract(red1)).divide(Pnir1.add(red1))
                 NDVI_detect = (NDVI_1.subtract(NDVI_0))
-                # Map.addLayer(NDVI_0, name= 'NDVI - ' + dates[0])
-                # Map.add_layer(NDVI_0)
-                Map.add_basemap('SATELLITE')
-                # Map.addLayer(NDVI_1, name= 'NDVI - ' + dates[1])
-                # Map.addLayer(NDVI_detect, name= 'Detecção de mudanças - ' + dates[1])
-               
+                # Abrindo comninação de bandas das imagens
+                nat_0 = ee.Image(img0)
+                nat_1 = ee.Image(img1)
+                
+                layers = st.multiselect('Selecione as camadas para carregar no mapa:', ('Área de interesse', 'Cor Natural', 'NDVIs', 'Detecção de Mudança'))
+                
 
     with colB2:
         if uploaded_file is not None:
-            Map = None
             Map = geemap.Map(locate_control=True,
             add_google_map=False,
             basemap='ROADMAP',
             plugin_Draw=True,
             draw_export=True)
-            Map.addLayerControl()
             Map.centerObject(geometry)
-            Map.add_basemap('SATELLITE')
+            
+            # if 'Mapa Base Satélite' in layers:
+            #     Map.add_basemap('SATELLITE')
 
+            if 'Cor Natural' in layers:
+                Map.addLayer(nat_0, {'bands': 'B7,B5,B3'}, name= 'Cor Natural - ' + dates[0])
+                Map.addLayer(nat_1, {'bands': 'B7,B5,B3'}, name= 'Cor Natural - ' + dates[1])
+
+            if 'NDVIs' in layers:
+                Map.addLayer(NDVI_0, name= 'NDVI - ' + dates[0])
+                Map.addLayer(NDVI_1, name= 'NDVI - ' + dates[1])             
+            
+            if 'Detecção de Mudança' in layers:
+                Map.addLayer(NDVI_detect, name= 'Detecção de mudanças')
+
+            if 'Área de interesse' in layers:
+                Map.addLayer(geometry, {'color': '#CD5C5C'},name= 'Área de interesse')
+            
+        
+        Map.addLayerControl()
         folium_static(Map, width=800, height=600)
         texto = """<p  style='text-align: justify; color: #31333F;'>
                         Informações do Landsat 8:\n</p>
