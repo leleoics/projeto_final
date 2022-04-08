@@ -5,7 +5,7 @@ import json
 import ee
 from datetime import datetime
 from apps.old.dam import folium_static
-from apps.satelites import image_filter, landsat8, ndvi
+from apps.satelites import image_filter, landsat8
 
 
 
@@ -27,9 +27,7 @@ def geolocator(keyword):
                 icon='info-sign'))
             if marker is not None:
                 return marker, lon, lat
-            else:
-                marker, lon, lat = None, None, None
-                return marker, lon, lat
+
 
 def parametros():
     """
@@ -48,18 +46,17 @@ def parametros():
     with colA1:
         st.markdown("""
     <p  style='text-align: justify; color: #31333F;'>
-                        Esta ferramenta permite que seja realizado a detecção de alterações em uma área de interesse do usuário:\n</p>
+                        Esta ferramenta permite que seja realizado a detecção de mudanças em uma área de interesse do usuário:\n</p>
     <p  style='text-align: justify; color: #31333F;'>
                         Para isso, siga o passo a passo ao lado <b> -> </b>\n</p>
     <p  style='text-align: justify; color: #31333F;'>
                          </b>\n</p>
     """, unsafe_allow_html=True)
         chave = st.text_input("Digite o nome do local:", "")
+        marcador = None
         if chave:
             marcador, lon, lat = geolocator(chave)
-            if marcador is not None:
-                marcador.add_to(Map)
-                Map.set_center(lon, lat, zoom=11)
+
 
     with colB1:
         st.markdown("""
@@ -80,9 +77,13 @@ def parametros():
     with colA2:
         Map = geemap.Map(locate_control=True,
              add_google_map=False,
-             basemap='SATELLITE',
+             basemap='ROADMAP',
              plugin_Draw=True,
              draw_export=True)
+        Map.addLayerControl()
+        if marcador is not None:
+            marcador.add_to(Map)
+            Map.set_center(lon, lat, zoom=11)
         # mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021")
         # Map.addLayer(mun, name='Estados do Brasil')
         # Map.addLayerControl()
@@ -111,11 +112,8 @@ def parametros():
             geometry = ee.Geometry.Polygon(coord)
             Map.addLayer(geometry, name='Área de estudo')
             Map.center_object(geometry)
-            colecao = 'LANDSAT/LC08/C01/T1_TOA'                  
-            
-            # Acho mais prudente retirar as opções de satélite e trabalhar apenas com Landsat por enquanto.
-            # Retirar também a combinação de bandas, uma vez que apenas poderá ser utilizado o que se utiliza no método
-            # # A não ser que seja por visualização apenas
+                 
+
             # satelite = st.multiselect('Selecione o Satélite: ', colecoes.keys())
             # bandas_combination = {
             #                 'Selecione': '',
@@ -138,10 +136,9 @@ def parametros():
                 date_range = (date_start, date_end)
                 length, dates, lis_ids = landsat8(geometry, date_range)
                 st.write('Quantidade de Imagens disponíveis nesse período: ', length)
-                # date = st.selectbox('Datas disponíveis:', dates)
                 st.markdown("""
                 <p  style='text-align: justify; color: #31333F;'>
-                    Como o satélite tem tempo de revisita a cada 16 dias e existe uma filtragem de núvens, as datas de imagens com 
+                    O satélite faz a revisita a cada 16 dias e existe uma filtragem de núvens, portanto as datas de imagens com 
                     visibilidade na região mais próximas do período são:\n</p>
                 <p  style='text-align: justify; color: #31333F;'>""", unsafe_allow_html=True)
                 st.markdown('-' + dates[0])
