@@ -144,6 +144,12 @@ def parametros():
                 <p  style='text-align: justify; color: #31333F;'>""", unsafe_allow_html=True)
                 st.markdown('- ' + dates[0])
                 st.markdown('- ' + dates[1])
+                Map = geemap.Map(locate_control=True,
+                add_google_map=False,
+                basemap='ROADMAP',
+                plugin_Draw=True,
+                draw_export=True)
+                Map.addLayerControl()
                 # st.write(lis_ids) # Colocar em ver mais
                 Imgs = image_filter(dates, lis_ids)
                 img0 = Imgs[0]
