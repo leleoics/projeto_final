@@ -32,6 +32,10 @@ with col01:
 with col02:
     st.markdown("""
     <h4  style='text-align: left; color: #31333F;'>
+     </h4>
+    """, unsafe_allow_html=True)
+    st.markdown("""
+    <h4  style='text-align: left; color: #31333F;'>
     Detecção de mudança de séries temporais de imagens</h4>
     """, unsafe_allow_html=True)
 with col03:

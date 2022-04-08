@@ -17,7 +17,7 @@ def plot_image(selection):
     if selection == 'Streamlit':
         st.image("https://media.giphy.com/media/cjOSHYWOqfNwyLkRv8/giphy.gif", caption="Streamlit", width=80)
     if selection == 'Detecção':
-        st.image("https://media.giphy.com/media/8XpXWrNtQsqzWjws6R/giphy.gif", width=140)
+        st.image("https://media.giphy.com/media/8XpXWrNtQsqzWjws6R/giphy.gif", width=170)
     return
 
 def inicio():
@@ -29,7 +29,7 @@ def inicio():
             plot_gif(2)
 
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>- </b>Este projeto está sendo desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
+    <b>- </b>Este é um projeto desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
     da Universidade Federal do Paraná.</p>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
