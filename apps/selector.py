@@ -1,4 +1,3 @@
-from sqlite3 import Date
 import streamlit as st
 import geemap.foliumap as geemap
 import folium
@@ -6,7 +5,7 @@ import json
 import ee
 from datetime import datetime
 from apps.old.dam import folium_static
-from apps.satelites import image_filter, landsat8, landsat9, ndvi
+from apps.satelites import image_filter, landsat8, ndvi
 
 
 

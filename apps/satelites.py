@@ -1,13 +1,10 @@
-from email.errors import NonPrintableDefect
-from sqlite3 import Date
-import streamlit as st
-import geemap.foliumap as geemap
-import folium
-import json
+# import streamlit as st
+# import geemap.foliumap as geemap
+# import folium
+# import json
 import ee
-from datetime import datetime
-from apps.old.dam import folium_static
-from numpy import mean
+# from datetime import datetime
+# from apps.old.dam import folium_static
 
 
 def maskS2clouds(image):
