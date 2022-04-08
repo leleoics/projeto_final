@@ -1,3 +1,4 @@
+from sqlite3 import Date
 import streamlit as st
 import geemap.foliumap as geemap
 import folium
@@ -5,7 +6,7 @@ import json
 import ee
 from datetime import datetime
 from apps.old.dam import folium_static
-from apps.satelites import copernicus, landsat8, landsat9, ndvi
+from apps.satelites import image_filter, landsat8, landsat9, ndvi
 
 
 
@@ -136,17 +137,38 @@ def parametros():
             if date_start != today:
                 date_end = str(st.date_input('Selecione a data (final): '))
                 date_range = (date_start, date_end)
-                length, dates, ids = landsat8(geometry, date_range, )
-                st.write('Quantidade de Imagens disponíveis: ', length)
-                date = st.selectbox('Datas disponíveis:', dates)
-                if date != 'Selecione':
-                        select = st.selectbox('Selecione o ID da imagem para carregar no mapa', ['Selecione'] + ids)    
-                        Pnir0 = ee.Image(select).select('B5')
-                        red0 = ee.Image(select).select('B2')
-                        if select != 'Selecione':
-                            Map.addLayer(Pnir0, name= 'Infravermelho Próximo - ' + date)
-                            Map.addLayer(red0, name='Vermelho - ' + date)
-                            Map.addLayerControl()
+                length, dates, lis_ids = landsat8(geometry, date_range)
+                st.write('Quantidade de Imagens disponíveis nesse período: ', length)
+                # date = st.selectbox('Datas disponíveis:', dates)
+                st.markdown("""
+                <p  style='text-align: justify; color: #31333F;'>
+                    Como o satélite tem tempo de revisita a cada 16 dias e existe uma filtragem de núvens, as datas de imagens com 
+                    visibilidade na região mais próximas do período são:\n</p>
+                <p  style='text-align: justify; color: #31333F;'>""", unsafe_allow_html=True)
+                st.markdown('-' + dates[0])
+                st.markdown('-' + dates[1])
+                # st.write(lis_ids) # Colocar em ver mais
+                Imgs = image_filter(dates, lis_ids)
+                img0 = Imgs[0]
+                img1 = Imgs[1]   
+                Pnir0 = ee.Image(img0).select('B5')
+                red0 = ee.Image(img0).select('B2')
+                Pnir1 = ee.Image(img1).select('B5')
+                red1 = ee.Image(img1).select('B2')
+                # Map.addLayer(Pnir0, name= 'Infravermelho Próximo - ' + dates[0])
+                # Map.addLayer(red0, name='Vermelho - ' + dates[0])
+                # Map.addLayer(Pnir1, name= 'Infravermelho Próximo - ' + dates[1])
+                # Map.addLayer(red1, name='Vermelho - ' + dates[1])
+                NDVI_0 = (Pnir0.subtract(red0)).divide(Pnir0.add(red0))
+                NDVI_1 = (Pnir1.subtract(red1)).divide(Pnir1.add(red1))
+                NDVI_detect = (NDVI_1.subtract(NDVI_0))
+                Map.addLayer(NDVI_0, name= 'NDVI - ' + dates[0])
+                Map.addLayer(NDVI_1, name= 'NDVI - ' + dates[1])
+                Map.addLayer(NDVI_detect, name= 'Detecção de mudanças - ' + dates[1])
+
+
+
+                Map.addLayerControl()
 
                 # dataset, visualization =  landsat8(geometry, date_range)
                 # Map.addLayer(dataset, visualization, name = 'Coleção Landsat 08')

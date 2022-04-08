@@ -1,3 +1,5 @@
+from email.errors import NonPrintableDefect
+from sqlite3 import Date
 import streamlit as st
 import geemap.foliumap as geemap
 import folium
@@ -53,17 +55,48 @@ def landsat8(geometry, date_range):
     ids, dates = [], []
     for i in range(0, (length)):
         name = features['features'][i]['id']
-        date = name[-2:] + '/' + name[-4:-2] + '/' + name[-8:-4]
-        ids.append(name)                                        
+        year = name[-8:-4]
+        month = name[-4:-2]
+        day = name[-2:]
+        # date = name[-2:] + '/' + name[-4:-2] + '/' + name[-8:-4]
+        date = year + '/' + month + '/' + day
+        ids.append(name)                                       
         dates.append(date)
-        dates = ['Selecione'] + remove_duplicates_list(dates)
+        dates = remove_duplicates_list(dates)
         date_r =  date[-4:] + date[-7:-5] + date[-10:-8]
-        select_ids = []
-        # Arrumar essa parte depois! Esta puxando apenas o primeiro valor
-        for id in ids:
-            if date_r in id:
-                select_ids.append(id)
-    return length, dates, select_ids
+        # select_ids = []
+        # for id in ids:
+        #     if date_r in id:
+        #         select_ids.append(id)
+    dates = sorted(dates)
+    disp_dates = []
+    i = -1
+    for value in dates:
+        i = i + 1
+        year = value[-10:-6]
+        month = value[-6:-2]
+        day = value[-2:]
+        period = day + month + year
+        disp_dates.append(period)
+        if i == 0:
+            first = period
+        if i > 0:
+            last = period
+    dates = [first, last]
+
+    return length, dates, ids
+
+def image_filter(datas, list):
+    Ids = []
+    for value in datas:
+        year = value[-4:]
+        month = value[-7:-5]
+        day = value[-10:-8]
+        date = year + month + day
+        for value2 in list:
+            if date in value2:
+                Ids.append(value2)
+    return Ids  
 
 # def landsat8(geometry, date_range):
 
