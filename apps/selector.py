@@ -79,6 +79,11 @@ def parametros():
             marcador.add_to(Map)
             Map.set_center(lon, lat, zoom=11)
         # mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021") # Adicionar shp de diretorio do gee
+        #COMENTÁRIOS DE PESQUISA COM USUÁRIO:
+        # - Na aba inicial poderia mudar a estrutura e colocar um subtópico;
+        # - Melhorar a descrição de como exportar o arquivo;
+        # - Melhorar a descrição da necessidade de inserir duas datas para o teste;      
+        
 
         if uploaded_file is not None:
             st.markdown("""

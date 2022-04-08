@@ -45,15 +45,15 @@ def inicio():
     </p>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>- </b> Água 🌊
+    <b>   - </b> Água 🌊
     </p>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>- </b> Vegetação 🌳
+    <b>   - </b> Vegetação 🌳
     </p>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>- </b> Urbanização 🌆
+    <b>   - </b> Urbanização 🌆
     </p>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
