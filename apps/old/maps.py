@@ -1,7 +1,7 @@
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import streamlit as st
 import geemap.foliumap as geemap
-import ee
+# import ee
 from apps.old.dam import folium_static
 
 
