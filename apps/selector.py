@@ -36,7 +36,7 @@ def parametros():
     """
     Map = geemap.Map(locate_control=True,
     add_google_map=False,
-    basemap='SATELLITE',
+    basemap='ROADMAP',
     plugin_Draw=True,
     draw_export=True)
     Map.addLayerControl()
@@ -75,46 +75,19 @@ def parametros():
 
     colA2, colB2 = st.columns([1,2])
     with colA2:
-        Map = geemap.Map(locate_control=True,
-             add_google_map=False,
-             basemap='ROADMAP',
-             plugin_Draw=True,
-             draw_export=True)
-        Map.addLayerControl()
         if marcador is not None:
             marcador.add_to(Map)
             Map.set_center(lon, lat, zoom=11)
-        # mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021")
-        # Map.addLayer(mun, name='Estados do Brasil')
-        # Map.addLayerControl()
-        # keyword = st.text_input("Digite o nome do local:", "")
-        # if keyword:
-        #     locations = geemap.geocode(keyword)
-        #     if locations is not None and len(locations) > 0:
-        #         str_locations = [str(g)[1:-1] for g in locations]
-        #         location = st.selectbox("Selecione o local desejado:", str_locations)
-        #         loc_index = str_locations.index(location)
-        #         selected_loc = locations[loc_index]
-        #         lat, lon = selected_loc.lat, selected_loc.lng
-        #         folium.Marker(location=[lat,lon],
-        #          popup=location,
-        #          icon=folium.Icon(color='red', 
-        #          icon='info-sign')).add_to(Map)
-        #         Map.set_center(lon, lat, zoom=11)
-        # uploaded_file = st.file_uploader("Faça upload do arquivo com a área desejada:", 
-        # type='GEOJSON', 
-        # accept_multiple_files=False)
+        # mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021") # Adicionar shp de diretorio do gee
+
         if uploaded_file is not None:
             bytes_data = uploaded_file.read()
-            a= bytes_data
+            a = bytes_data
             decoder = json.loads(a.decode('utf-8'))
             coord = decoder['features'][0]['geometry']['coordinates']
             geometry = ee.Geometry.Polygon(coord)
             # Map.addLayer(geometry, name='Área de interesse')
             # Map.center_object(geometry)
-                 
-
-            # satelite = st.multiselect('Selecione o Satélite: ', colecoes.keys())
             # bandas_combination = {
             #                 'Selecione': '',
             #                 'Cor Natural': 'B4,B3,B2',
@@ -144,16 +117,12 @@ def parametros():
                 <p  style='text-align: justify; color: #31333F;'>""", unsafe_allow_html=True)
                 st.markdown('- ' + dates[0])
                 st.markdown('- ' + dates[1])
-                Map = geemap.Map(locate_control=True,
-                add_google_map=False,
-                basemap='ROADMAP',
-                plugin_Draw=True,
-                draw_export=True)
-                Map.addLayerControl()
                 # st.write(lis_ids) # Colocar em ver mais
                 Imgs = image_filter(dates, lis_ids)
                 img0 = Imgs[0]
-                img1 = Imgs[1]   
+                img1 = Imgs[1]
+                # Map.addLayer(geometry, name='Área de interesse')
+                # Map.center_object(geometry)   
                 Pnir0 = ee.Image(img0).select('B5')
                 red0 = ee.Image(img0).select('B2')
                 Pnir1 = ee.Image(img1).select('B5')
@@ -165,35 +134,25 @@ def parametros():
                 NDVI_0 = (Pnir0.subtract(red0)).divide(Pnir0.add(red0))
                 NDVI_1 = (Pnir1.subtract(red1)).divide(Pnir1.add(red1))
                 NDVI_detect = (NDVI_1.subtract(NDVI_0))
-                Map.addLayer(NDVI_0, name= 'NDVI - ' + dates[0])
-                Map.addLayer(NDVI_1, name= 'NDVI - ' + dates[1])
-                Map.addLayer(NDVI_detect, name= 'Detecção de mudanças - ' + dates[1])
-
-
-                # dataset, visualization =  landsat8(geometry, date_range)
-                # Map.addLayer(dataset, visualization, name = 'Coleção Landsat 08')
-                # Map.addLayer(geometry, name='Área importada')
-                # Map.addLayerControl()    
-
-                        # if 'LANDSAT 09' in satelite:
-                        #     dataset, visualization =  landsat9(geometry, date_range)
-                        #     Map.addLayer(dataset, visualization, name = 'Coleção Landsat 09')
-                        #     Map.addLayer(geometry, name='Área importada')
-                            
-
-                        # if 'SENTINEL' in satelite:
-                        #     dataset, visualization =  copernicus(geometry, date_range)
-                        #     Map.addLayer(dataset, visualization, name = 'Coleção Copernicus')
-
-
-                        # if 'NDVI' in satelite:
-                        #     dataset, visualization =  ndvi(date_range)
-                        #     Map.addLayer(dataset, visualization, name = 'NDVI')
-
-                        
-
+                # Map.addLayer(NDVI_0, name= 'NDVI - ' + dates[0])
+                # Map.add_layer(NDVI_0)
+                Map.add_basemap('SATELLITE')
+                # Map.addLayer(NDVI_1, name= 'NDVI - ' + dates[1])
+                # Map.addLayer(NDVI_detect, name= 'Detecção de mudanças - ' + dates[1])
+               
 
     with colB2:
+        if uploaded_file is not None:
+            Map = None
+            Map = geemap.Map(locate_control=True,
+            add_google_map=False,
+            basemap='ROADMAP',
+            plugin_Draw=True,
+            draw_export=True)
+            Map.addLayerControl()
+            Map.centerObject(geometry)
+            Map.add_basemap('SATELLITE')
+
         folium_static(Map, width=800, height=600)
         texto = """<p  style='text-align: justify; color: #31333F;'>
                         Informações do Landsat 8:\n</p>
