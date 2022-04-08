@@ -40,7 +40,7 @@ def parametros():
     plugin_Draw=True,
     draw_export=True)
     Map.addLayerControl()
-
+    layers = [] # Iniciando a variável que é preenchida após realizar as operações de detecção
 
     colA1, colB1 = st.columns([1,1]) 
     with colA1:
@@ -81,6 +81,11 @@ def parametros():
         # mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021") # Adicionar shp de diretorio do gee
 
         if uploaded_file is not None:
+            st.markdown("""
+            <p  style='text-align: justify; color: #3CB371;'>
+            ✔️ Área carregada com sucesso
+            </p>
+            """, unsafe_allow_html=True)
             bytes_data = uploaded_file.read()
             a = bytes_data
             decoder = json.loads(a.decode('utf-8'))
@@ -106,7 +111,6 @@ def parametros():
             date_start = str(st.date_input('Selecione a data (inicial): '))
             # criterio = 0
             if date_start != today:
-                criterio = 1
                 date_end = str(st.date_input('Selecione a data (final): '))
                 date_range = (date_start, date_end)
                 length, dates, lis_ids = landsat8(geometry, date_range)
