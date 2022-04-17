@@ -22,38 +22,35 @@ def plot_image(selection):
 
 def inicio():
     with st.expander('Ver mais:'):
-        col01, col02 = st.columns([1, 1])
-        with col01:
-            plot_gif(1)
-        with col02:
-            plot_gif(2)
+        # col01, col02 = st.columns([1, 1])
+        # with col01:
+        #     plot_gif(1)
+        # with col02:
+        #     plot_gif(2)
+        st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+        <b>- </b>Este é um projeto desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
+        da Universidade Federal do Paraná.</p>
+        """, unsafe_allow_html=True)
 
-    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>- </b>Este é um projeto desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
-    da Universidade Federal do Paraná.</p>
-    """, unsafe_allow_html=True)
-    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>- </b>É uma ferramenta que permite detectar mudanças na superfície da terra 🌎 através de imagens orbitais.
-    </p>
-    """, unsafe_allow_html=True)
-    st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>- </b>É possível detectar alterações entre duas épocas distintas de sua escolha.
-    </p>
+    st.markdown("""<h6  style='text-align: justify; color: #31333F;'>
+    Detector de Mudanças é uma ferramenta que permite detectar mudanças na superfície da Terra 🌎 através de imagens orbitais,
+    onde é possível detectar alterações entre duas épocas distintas de sua escolha.
+    </h6>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
     <b>- </b> Disponível técnicas de detecção de mudanças para os seguintes fenômenos:
     </p>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>   - </b> Água 🌊
+    🌊 Água 
     </p>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>   - </b> Vegetação 🌳
+    🌳 Vegetação 
     </p>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>   - </b> Urbanização 🌆
+    🌆 Urbanização 
     </p>
     """, unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
