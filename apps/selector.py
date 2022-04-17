@@ -59,15 +59,17 @@ def parametros():
 
 
     with colB1:
-        st.markdown("""
+        st.markdown("""                        
     <p  style='text-align: justify; color: #31333F;'>
                         <b> 1 - </b>Digite a localizaçao para centralizar o mapa:\n</p>
     <p  style='text-align: justify; color: #31333F;'>
-                        <b> 2 - </b>Desenhe a área de interesse no mapa:\n</p>
+<b> 2 - </b>Desenhe a área de interesse no mapa:\n</p>
     <p  style='text-align: justify; color: #31333F;'>
                         <b> 3 - </b>Exporte a área de interesse                 :\n</p>
     <p  style='text-align: justify; color: #31333F;'>
                         <b> 4 - </b>Faça o Upload do arquivo Geojson gerado     :\n</p>
+    <p  style='text-align: justify; color: #31333F;'>
+                        <b> ... </b>Siga os passos a esquerda.\n</p>
     """, unsafe_allow_html=True)
         uploaded_file = st.file_uploader("Faça upload do arquivo com a área desejada:", 
         type='GEOJSON', 
@@ -114,7 +116,6 @@ def parametros():
 
             today = str(datetime.today().strftime('%Y-%m-%d'))
             date_start = str(st.date_input('Selecione a data (inicial): '))
-            # criterio = 0
             if date_start != today:
                 date_end = str(st.date_input('Selecione a data (final): '))
                 date_range = (date_start, date_end)
@@ -132,7 +133,7 @@ def parametros():
                 Imgs = image_filter(dates, lis_ids)
                 img0 = Imgs[0]
                 img1 = Imgs[1]
-
+                # Detecção de mudanças NDVI
                 Pnir0 = ee.Image(img0).select('B5')
                 red0 = ee.Image(img0).select('B2')
                 Pnir1 = ee.Image(img1).select('B5')
@@ -140,11 +141,19 @@ def parametros():
                 NDVI_0 = (Pnir0.subtract(red0)).divide(Pnir0.add(red0))
                 NDVI_1 = (Pnir1.subtract(red1)).divide(Pnir1.add(red1))
                 NDVI_detect = (NDVI_1.subtract(NDVI_0))
+                # Detecção de mudanças NDWI
+                # Pnir0 = ee.Image(img0).select('B5') # Já está aberto para o método ndvi
+                green0 = ee.Image(img0).select('B3')
+                # Pnir1 = ee.Image(img1).select('B5') # Já está aberto para o método ndvi
+                green1 = ee.Image(img1).select('B3')
+                NDWI_0 = (Pnir0.subtract(green0)).divide(Pnir0.add(green0))
+                NDWI_1 = (Pnir1.subtract(green1)).divide(Pnir1.add(green1))
+                NDWI_detect = (NDWI_1.subtract(NDWI_0))
                 # Abrindo comninação de bandas das imagens
                 nat_0 = ee.Image(img0)
                 nat_1 = ee.Image(img1)
                 
-                layers = st.multiselect('Selecione as camadas para carregar no mapa:', ('Área de interesse', 'Cor Natural', 'NDVIs', 'Detecção de Mudança'))
+                layers = st.multiselect('Selecione as camadas para carregar no mapa:', ('Área de interesse', 'Cor Natural', 'NDVIs', 'Detecção de Mudança - Vegetação', 'Detecção de Mudança - Água'))
                 
 
     with colB2:
@@ -167,8 +176,11 @@ def parametros():
                 Map.addLayer(NDVI_0, name= 'NDVI - ' + dates[0])
                 Map.addLayer(NDVI_1, name= 'NDVI - ' + dates[1])             
             
-            if 'Detecção de Mudança' in layers:
-                Map.addLayer(NDVI_detect, name= 'Detecção de mudanças')
+            if 'Detecção de Mudança - Vegetação' in layers:
+                Map.addLayer(NDVI_detect, name= 'Detecção de mudanças - NDVI')
+
+            if 'Detecção de Mudança - Água' in layers:
+                Map.addLayer(NDWI_detect, name= 'Detecção de mudanças - NDWI')
 
             if 'Área de interesse' in layers:
                 Map.addLayer(geometry, {'color': '#CD5C5C'},name= 'Área de interesse')
