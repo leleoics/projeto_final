@@ -187,7 +187,7 @@ def parametros():
             
         
         Map.addLayerControl()
-        folium_static(Map, width=800, height=600)
+        folium_static(Map, width=1020, height=600)
         texto = """<p  style='text-align: justify; color: #31333F;'>
                         Informações do Landsat 8:\n</p>
                         <p  style='text-align: justify; color: #31333F;'>  
