@@ -46,6 +46,9 @@ def inicio():
         plot_image('vegetacao')
         with st.expander('Saber mais'):
             st.markdown("Técnica de detecção por diferença de (NDVI)")
+            st.markdown("""<p  style='text-align: justify; color: #31333F;'>
+            Entendendo o que é:
+            </p>""", unsafe_allow_html=True)
     with col02:
         plot_image('agua')
         with st.expander('Saber mais'):
@@ -68,13 +71,13 @@ def inicio():
 
             st.markdown("""<p  style='text-align: justify; color: #31333F;'>
             Este é um projeto desenvolvido como trabalho de conclusão de curso da Engenharia Cartografica e de Agrimensura, 
-        da Universidade Federal do Paraná. O objetivo da aplicação é disponibilizar ao usuário uma plataforma para detectar mudanças a partir de uma série 
-        temporal de imagens através do processamento de imagens em nuvem no Google Earth Engine e pode ser utilizado por
-        qualquer profissional que deseje mapear mudanças entre épocas ou para uso educacional.</p>
+        da Universidade Federal do Paraná. O objetivo da aplicação é disponibilizar ao usuário uma plataforma para detectar 
+        mudanças a partir de uma série temporal de imagens através do processamento de imagens em nuvem no Google Earth 
+        Engine e pode ser utilizado por alguém que deseje mapear mudanças entre épocas ou para uso educacional.</p>
         """, unsafe_allow_html=True)
 
             st.markdown("""
-            \n Página do Curso: [Eng. Cart. e de Agrim - UFPR](http://www.cartografica.ufpr.br/)""")
+            Página do Curso: [Eng. Cart. e de Agrim - UFPR](http://www.cartografica.ufpr.br/)""")
 
     with col12:
         st.markdown("""<h6  style='text-align: center; color: #31333F;'>
@@ -87,7 +90,7 @@ def inicio():
     <b>  </b> </p>""", unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
     <b>  </b> </p>""", unsafe_allow_html=True)
-    
+
     st.markdown("""<h5  style='text-align: justify; color: #31333F;'>
     🎥 Como utilizar:</h5>""", unsafe_allow_html=True)
     with st.expander('Encontrar aplicação:'):
