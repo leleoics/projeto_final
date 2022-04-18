@@ -1,3 +1,4 @@
+from turtle import width
 import streamlit as st
 from PIL import Image
 
@@ -93,11 +94,9 @@ def inicio():
 
     st.markdown("""<h5  style='text-align: justify; color: #31333F;'>
     🎥 Como utilizar:</h5>""", unsafe_allow_html=True)
-    with st.expander('Encontrar aplicação:'):
-        video_inicio = open('./data/thumbnails/inicio.mp4','rb')
-        video_inicio_bytes = video_inicio.read()
-        st.video(video_inicio_bytes, format="video/mp4")
-    with st.expander('Utilizar aplicação:'):
+    with st.expander('Como iniciar a aplicação'):
+        st.video('https://youtu.be/bvY1nHqAmHI')
+    with st.expander('Exemplo de uso - Reservatório do Iraí / Paraná'):
         video_inicio = open('./data/thumbnails/inicio.mp4','rb')
         video_inicio_bytes = video_inicio.read()
         st.video(video_inicio_bytes, format="video/mp4")
