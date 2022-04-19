@@ -153,7 +153,7 @@ def parametros():
                 nat_0 = ee.Image(img0)
                 nat_1 = ee.Image(img1)
                 
-                layers = st.multiselect('Selecione as camadas para carregar no mapa:', ('Área de interesse', 'Cor Natural', 'NDVIs', 'Detecção de Mudança - Vegetação', 'Detecção de Mudança - Água'))
+                layers = st.multiselect('Selecione as camadas para carregar no mapa:', ('Área de interesse', 'Cor Natural', 'DM - Vegetação', 'DM - Água'))
                 
 
     with colB2:
@@ -171,16 +171,12 @@ def parametros():
             if 'Cor Natural' in layers:
                 Map.addLayer(nat_0, {'bands': 'B7,B5,B3'}, name= 'Cor Natural - ' + dates[0])
                 Map.addLayer(nat_1, {'bands': 'B7,B5,B3'}, name= 'Cor Natural - ' + dates[1])
+               
+            if 'DM - Vegetação' in layers:
+                Map.addLayer(NDVI_detect, name= 'DM - NDVI')
 
-            if 'NDVIs' in layers:
-                Map.addLayer(NDVI_0, name= 'NDVI - ' + dates[0])
-                Map.addLayer(NDVI_1, name= 'NDVI - ' + dates[1])             
-            
-            if 'Detecção de Mudança - Vegetação' in layers:
-                Map.addLayer(NDVI_detect, name= 'Detecção de mudanças - NDVI')
-
-            if 'Detecção de Mudança - Água' in layers:
-                Map.addLayer(NDWI_detect, name= 'Detecção de mudanças - NDWI')
+            if 'DM - Água' in layers:
+                Map.addLayer(NDWI_detect, name= 'DM - NDWI')
 
             if 'Área de interesse' in layers:
                 Map.addLayer(geometry, {'color': '#CD5C5C'},name= 'Área de interesse')
@@ -188,8 +184,10 @@ def parametros():
         
         Map.addLayerControl()
         folium_static(Map, width=1020, height=600)
-        texto = """<p  style='text-align: justify; color: #31333F;'>
-                        Informações do Landsat 8:\n</p>
+        texto = """<h6  style='text-align: justify; color: #31333F;'>
+                        Informações sobre o Satélite:\n</h6>
+                        <p  style='text-align: justify; color: #31333F;'>  
+                        <b>- </b>Satélite: Landsat 8\n</p>
                         <p  style='text-align: justify; color: #31333F;'>  
                         <b>- </b>Lançamento: 11 de fevereiro de 2013;\n</p>
                         <p  style='text-align: justify; color: #31333F;'> 
@@ -203,6 +201,16 @@ def parametros():
                         <p  style='text-align: justify; color: #31333F;'>
                         <b>- </b>Tempo de revisita: 16 dias.</p>           
                 """
-        with st.expander("Visualizar dados do satélite:"):
+        with st.expander("Informação sobre os dados do mapa:"):
             st.markdown(texto, unsafe_allow_html=True)
+        st.markdown("""
+        <p  style='text-align: justify; color: #31333F;'>
+        🔲 Regiões com tom mais claro são áreas onde <b>houve</b> mudança.
+        </p>
+        """, unsafe_allow_html=True)
+        st.markdown("""
+        <p  style='text-align: justify; color: #31333F;'>
+        🔳 Regiões com tom mais escuro são áreas onde <b>não houve</b> mudança.
+        </p>
+        """, unsafe_allow_html=True)
     return 
