@@ -37,6 +37,9 @@ def inicio():
     onde é possível detectar alterações entre duas épocas distintas de sua escolha.
     </p>
     """, unsafe_allow_html=True)
+
+
+
     st.markdown("""<h6  style='text-align: justify; color: #31333F;'>
     📌 Disponível técnicas de detecção de mudanças para os seguintes fenômenos:
     </h6>
@@ -46,9 +49,7 @@ def inicio():
         plot_image('vegetacao')
         with st.expander('Saber mais'):
             st.markdown("Técnica de detecção por diferença de (NDVI)")
-            st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-            Entendendo o que é:
-            </p>""", unsafe_allow_html=True)
+            st.video('https://youtu.be/-PlJ2Kb_C48')
     with col02:
         plot_image('agua')
         with st.expander('Saber mais'):
