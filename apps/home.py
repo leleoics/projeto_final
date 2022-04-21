@@ -54,6 +54,8 @@ def inicio():
         plot_image('agua')
         with st.expander('Saber mais'):
             st.markdown("Técnica de detecção por diferença de (NDWI)")
+            st.video('https://youtu.be/Tot280Elbck')
+
     with col03:
         plot_image('urbano')
         with st.expander('Saber mais', ):
@@ -88,18 +90,37 @@ def inicio():
         st.image(ufpr, use_column_width=True)
 
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>  </b> </p>""", unsafe_allow_html=True)
+    </p>""", unsafe_allow_html=True)
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
-    <b>  </b> </p>""", unsafe_allow_html=True)
+    </p>""", unsafe_allow_html=True)
 
     st.markdown("""<h5  style='text-align: justify; color: #31333F;'>
-    🎥 Como utilizar:</h5>""", unsafe_allow_html=True)
-    with st.expander('Como iniciar a aplicação'):
-        st.video('https://youtu.be/bvY1nHqAmHI')
-    with st.expander('Exemplo de uso - Reservatório do Iraí / Paraná'):
-        video_inicio = open('./data/thumbnails/inicio.mp4','rb')
-        video_inicio_bytes = video_inicio.read()
-        st.video(video_inicio_bytes, format="video/mp4")
+    🎥 Vídeos:</h5>""", unsafe_allow_html=True)
+    with st.expander('Ver mais'):
+        col21, col22 = st.columns([1, 1])
+        with col21:
+            st.markdown("""<h6  style='text-align: center; color: #31333F;'>
+            <b>Título 1</b>
+        </h6>""", unsafe_allow_html=True)
+            st.video('https://youtu.be/Tot280Elbck')
+
+            st.markdown("""<h6  style='text-align: center; color: #31333F;'>
+            <b>Título 3</b>
+        </h6>""", unsafe_allow_html=True)
+            st.video('https://youtu.be/Tot280Elbck')
+
+        with col22:
+            st.markdown("""<h6  style='text-align: center; color: #31333F;'>
+           <b>Título 2</b>
+        </h6>""", unsafe_allow_html=True)
+            st.video('https://youtu.be/Tot280Elbck')
+
+            st.markdown("""<h6  style='text-align: center; color: #31333F;'>
+            <b>Título 4</b>
+        </h6>""", unsafe_allow_html=True)
+            st.video('https://youtu.be/Tot280Elbck')
+
+
 
     st.markdown("----")
     st.markdown("""<h6  style='text-align: center; color: #31333F;'>
