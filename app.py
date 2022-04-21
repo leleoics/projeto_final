@@ -28,33 +28,28 @@ ee.Initialize(credentials)
 st.markdown("----")
 col01, col02, col03 = st.columns([1, 3, 1])
 with col01:
-    plot_image('Detecção')
-with col02:
-    st.markdown("""
-    <h4  style='text-align: left; color: #31333F;'>
-     </h4>
-    """, unsafe_allow_html=True)
-    st.markdown("""
-    <h4  style='text-align: left; color: #31333F;'>
-    Detecção de mudança de séries temporais de imagens</h4>
-    """, unsafe_allow_html=True)
-with col03:
-    menu = st.expander('Ver Menu')
+    menu = st.expander('Menu',expanded=True)
     with menu:
         pagina = st.radio(
         "Selecione a página: ",
-        ('Página Inícial', 'Aplicação', 'Sobre'))
+        ('Página Inícial', 'Detecção de Mudança', 'Sobre'))
     st.markdown("""
     <h5  style='text-align: center; color: #31333F;'>
     {}</h5>
     """.format(pagina) , unsafe_allow_html=True)
+
+with col02:
+    cabecalho = Image.open("./data/thumbnails/cabecalho.png")
+    st.image(cabecalho, use_column_width=True)
+with col03:
+    plot_image('Detecção')
 
 st.markdown("----")
 if pagina == 'Página Inícial':
     inicio()
 
 
-if pagina == 'Aplicação':
+if pagina == 'Detecção de Mudança':
     parametros()
 
 
