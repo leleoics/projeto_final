@@ -49,7 +49,7 @@ def inicio():
         plot_image('vegetacao')
         with st.expander('Saber mais'):
             st.markdown("Técnica de detecção por diferença de (NDVI)")
-            st.video('https://youtu.be/-PlJ2Kb_C48')
+            st.video('https://youtu.be/Vv09DKTAI20')
     with col02:
         plot_image('agua')
         with st.expander('Saber mais'):
