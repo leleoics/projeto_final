@@ -46,18 +46,25 @@ def inicio():
     """, unsafe_allow_html=True)
     col01, col02, col03 = st.columns([1, 1, 1])
     with col01:
-        plot_image('vegetacao')
+        # plot_image('vegetacao')
+        vegetacao = Image.open("./data/thumbnails/veg.png")
+        st.image(vegetacao, use_column_width=True)
         with st.expander('Saber mais'):
             st.markdown("Técnica de detecção por diferença de (NDVI)")
             st.video('https://youtu.be/Vv09DKTAI20')
+
     with col02:
-        plot_image('agua')
+        # plot_image('agua')
+        agua = Image.open("./data/thumbnails/agua.png")
+        st.image(agua, use_column_width=True)
         with st.expander('Saber mais'):
             st.markdown("Técnica de detecção por diferença de (NDWI)")
             st.video('https://youtu.be/Tot280Elbck')
 
     with col03:
-        plot_image('urbano')
+        # plot_image('urbano')
+        urbano = Image.open("./data/thumbnails/urbano.png")
+        st.image(urbano, use_column_width=True)
         with st.expander('Saber mais', ):
             st.markdown("Técnica de detecção por (RCEN)")
 

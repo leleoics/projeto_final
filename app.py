@@ -33,10 +33,10 @@ with col01:
         pagina = st.radio(
         "Selecione a página: ",
         ('Página Inícial', 'Detecção de Mudança', 'Sobre'))
-    st.markdown("""
-    <h5  style='text-align: center; color: #31333F;'>
-    {}</h5>
-    """.format(pagina) , unsafe_allow_html=True)
+    # st.markdown("""
+    # <h5  style='text-align: center; color: #31333F;'>
+    # {}</h5>
+    # """.format(pagina) , unsafe_allow_html=True)
 
 with col02:
     cabecalho = Image.open("./data/thumbnails/cabecalho.png")
