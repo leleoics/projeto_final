@@ -38,7 +38,11 @@ def parametros():
     add_google_map=False,
     basemap='ROADMAP',
     plugin_Draw=True,
-    draw_export=True)
+    draw_export=True,
+    zoom=3,
+    center=[-18.1459,-57.3047])
+    # Latitude: -18.1459
+    # Longitude: -57.3047
     Map.addLayerControl()
     layers = [] # Iniciando a variável que é preenchida após realizar as operações de detecção
 
@@ -79,7 +83,7 @@ def parametros():
     with colA2:
         if marcador is not None:
             marcador.add_to(Map)
-            Map.set_center(lon, lat, zoom=11)
+            Map.set_center(lon, lat, zoom=13)
         # mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021") # Adicionar shp de diretorio do gee
         #COMENTÁRIOS DE PESQUISA COM USUÁRIO:
         # - Na aba inicial poderia mudar a estrutura e colocar um subtópico;
@@ -141,14 +145,13 @@ def parametros():
                 NDVI_0 = (Pnir0.subtract(red0)).divide(Pnir0.add(red0))
                 NDVI_1 = (Pnir1.subtract(red1)).divide(Pnir1.add(red1))
                 NDVI_detect = (NDVI_1.subtract(NDVI_0))
+
                 # Detecção de mudanças NDWI
-                # Pnir0 = ee.Image(img0).select('B5') # Já está aberto para o método ndvi
                 green0 = ee.Image(img0).select('B3')
-                # Pnir1 = ee.Image(img1).select('B5') # Já está aberto para o método ndvi
                 green1 = ee.Image(img1).select('B3')
-                NDWI_0 = (Pnir0.subtract(green0)).divide(Pnir0.add(green0))
-                NDWI_1 = (Pnir1.subtract(green1)).divide(Pnir1.add(green1))
-                NDWI_detect = (NDWI_1.subtract(NDWI_0))
+                NDWI_0 = (green0.subtract(Pnir0)).divide(green0.add(Pnir0))
+                NDWI_1 = (green1.subtract(Pnir1)).divide(green1.add(Pnir1))
+                NDWI_detect = (NDWI_0.subtract(NDWI_1))
                 # Abrindo comninação de bandas das imagens
                 nat_0 = ee.Image(img0)
                 nat_1 = ee.Image(img1)
@@ -164,7 +167,6 @@ def parametros():
             plugin_Draw=True,
             draw_export=True)
             Map.centerObject(geometry)
-            
             # if 'Mapa Base Satélite' in layers:
             #     Map.add_basemap('SATELLITE')
 
@@ -183,7 +185,7 @@ def parametros():
             
         
         Map.addLayerControl()
-        folium_static(Map, width=1020, height=600)
+        folium_static(Map, width=800, height=600)
         texto = """<h6  style='text-align: justify; color: #31333F;'>
                         Informações sobre o Satélite:\n</h6>
                         <p  style='text-align: justify; color: #31333F;'>  
