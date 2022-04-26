@@ -188,10 +188,9 @@ def parametros():
                 # Inspect the results.
                 # print('OLS estimates', linearRegression)
                 # print('y-intercept:', b0)
-                # print(b1)
+                # print(linearRegression)
                 # print('Residuals:', residuals)
                 # print('teta: ',teta)
-                st.write(b1)
                 teta = 0.8272143413892454
                 m = tan(teta * (pi/180))
                 id1 = Pnir0
