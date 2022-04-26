@@ -6,7 +6,7 @@ import ee
 from datetime import datetime
 from apps.old.dam import folium_static
 from apps.satelites import image_filter, landsat8
-
+from numpy import cos, sin, tan, pi
 
 
 def geolocator(keyword):
@@ -61,7 +61,6 @@ def parametros():
         if chave:
             marcador, lon, lat = geolocator(chave)
 
-
     with colB1:
         st.markdown("""                        
     <p  style='text-align: justify; color: #31333F;'>
@@ -101,7 +100,7 @@ def parametros():
             a = bytes_data
             decoder = json.loads(a.decode('utf-8'))
             coord = decoder['features'][0]['geometry']['coordinates']
-            geometry = ee.Geometry.Polygon(coord)
+            geometria = ee.Geometry.Polygon(coord)
             # Map.addLayer(geometry, name='Área de interesse')
             # Map.center_object(geometry)
             # bandas_combination = {
@@ -123,7 +122,7 @@ def parametros():
             if date_start != today:
                 date_end = str(st.date_input('Selecione a data (final): '))
                 date_range = (date_start, date_end)
-                length, dates, lis_ids = landsat8(geometry, date_range)
+                length, dates, lis_ids = landsat8(geometria, date_range)
                 st.write('Quantidade de Imagens disponíveis nesse período: ', length)
                 st.markdown("""
                 <p  style='text-align: justify; color: #31333F;'>
@@ -151,12 +150,62 @@ def parametros():
                 green1 = ee.Image(img1).select('B3')
                 NDWI_0 = (green0.subtract(Pnir0)).divide(green0.add(Pnir0))
                 NDWI_1 = (green1.subtract(Pnir1)).divide(green1.add(Pnir1))
-                NDWI_detect = (NDWI_0.subtract(NDWI_1))
+                NDWI_detect = (NDWI_1.subtract(NDWI_0))
+
+                # Detecção de mudanças RCEN
+
+                # Import a Landsat 8 TOA image for this region.
+                # var img1 = ee.Image('LANDSAT/LC08/C02/T1_RT/LC08_220067_20130706').select('B5'); Pnir já aberto
+                # var img2 = ee.Image('LANDSAT/LC08/C02/T1_RT/LC08_220067_20210914').select('B5'); Pnir já aberto
+                # Create a new image that is the concatenation of three images: a constant,
+                # the SWIR1 band, and the SWIR2 band.
+                constant = ee.Image(1)
+                xVar = Pnir0
+                yVar = Pnir1
+                imgRegress = ee.Image.cat(constant, xVar, yVar)
+
+                # Calculate regression coefficients for the set of pixels intersecting the
+                # above defined region using reduceRegion. The numX parameter is set as 2
+                # because the constant and the SWIR1 bands are independent variables and they
+                # are the first two bands in the stack; numY is set as 1 because there is only
+                # one dependent variable (SWIR2) and it follows as band three in the stack.
+
+                linearRegression = imgRegress.reduceRegion(
+                    reducer= ee.Reducer.linearRegression(2, 1),
+                    geometry = geometria,
+                    scale = 30)
+
+                # Convert the coefficients array to a list.
+                coefList = ee.Array(linearRegression.get('coefficients')).toList()
+
+                # Extract the y-intercept and slope.
+                b0 = ee.List(coefList.get(0)).get(0); # y-intercept
+                b1 = ee.List(coefList.get(1)).get(0); # slope
+
+                # Extract the residuals.
+                residuals = ee.Array(linearRegression.get('residuals')).toList().get(0)
+
+                # Inspect the results.
+                # print('OLS estimates', linearRegression)
+                # print('y-intercept:', b0)
+                # print(b1)
+                # print('Residuals:', residuals)
+                # print('teta: ',teta)
+                st.write(b1)
+                teta = 0.8272143413892454
+                m = tan(teta * (pi/180))
+                id1 = Pnir0
+                id2 = Pnir1
+                p1 = id2.multiply(cos(teta))
+                p2 = id1.multiply(sin(teta))
+                RCEN_detect = p1.subtract(p2)
+
+
                 # Abrindo comninação de bandas das imagens
                 nat_0 = ee.Image(img0)
                 nat_1 = ee.Image(img1)
                 
-                layers = st.multiselect('Selecione as camadas para carregar no mapa:', ('Área de interesse', 'Cor Natural', 'DM - Vegetação', 'DM - Água'))
+                layers = st.multiselect('Selecione as camadas para carregar no mapa:', ('Área de interesse', 'Cor Natural', 'DM - Vegetação', 'DM - Água', 'DM - Urbano'))
                 
 
     with colB2:
@@ -166,7 +215,7 @@ def parametros():
             basemap='ROADMAP',
             plugin_Draw=True,
             draw_export=True)
-            Map.centerObject(geometry)
+            Map.centerObject(geometria)
             # if 'Mapa Base Satélite' in layers:
             #     Map.add_basemap('SATELLITE')
 
@@ -180,8 +229,11 @@ def parametros():
             if 'DM - Água' in layers:
                 Map.addLayer(NDWI_detect, name= 'DM - NDWI')
 
+            if 'DM - Urbano' in layers:
+                Map.addLayer(RCEN_detect, name= 'DM - RCEN')
+
             if 'Área de interesse' in layers:
-                Map.addLayer(geometry, {'color': '#CD5C5C'},name= 'Área de interesse')
+                Map.addLayer(geometria, {'color': '#CD5C5C'},name= 'Área de interesse')
             
         
         Map.addLayerControl()

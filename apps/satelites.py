@@ -41,7 +41,7 @@ def landsat8(geometry, date_range):
     Entrada: geometry: geometria, date_range: data inicial, data final.
     Saída: dataset: coleção de imagem, length: quantidade de imagens, dates: data das imagens, select_ids: identificadores
     """
-    dataset = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA').filterMetadata('CLOUD_COVER', 'less_than', 2).filterDate(date_range[0], date_range[1]).filterBounds(geometry)
+    dataset = ee.ImageCollection('LANDSAT/LC08/C01/T1_RT_TOA').filterMetadata('CLOUD_COVER', 'less_than', 2).filterDate(date_range[0], date_range[1]).filterBounds(geometry)
     # LANDSAT/LC08/C01/T1_RT_TOA
     features = dataset.getInfo()
     length = len(features['features'])
