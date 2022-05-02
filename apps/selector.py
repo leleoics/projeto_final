@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import streamlit as st
 import geemap.foliumap as geemap
 import folium
@@ -83,12 +84,8 @@ def parametros():
         if marcador is not None:
             marcador.add_to(Map)
             Map.set_center(lon, lat, zoom=13)
-        # mun = ee.FeatureCollection("projects/projetofinal-340114/assets/BR_UF_2021") # Adicionar shp de diretorio do gee
-        #COMENTÁRIOS DE PESQUISA COM USUÁRIO:
-        # - Na aba inicial poderia mudar a estrutura e colocar um subtópico;
-        # - Melhorar a descrição de como exportar o arquivo;
-        # - Melhorar a descrição da necessidade de inserir duas datas para o teste;      
         
+           
 
         if uploaded_file is not None:
             st.markdown("""
@@ -204,7 +201,7 @@ def parametros():
                 nat_0 = ee.Image(img0)
                 nat_1 = ee.Image(img1)
                 
-                layers = st.multiselect('Selecione as camadas para carregar no mapa:', ('Área de interesse', 'Cor Natural', 'DM - Vegetação', 'DM - Água', 'DM - Urbano'))
+                layers = st.multiselect('Selecione as camadas para carregar no mapa:', ('Área de interesse', 'Cor Natural', 'DM - Vegetação', 'DM - Água', 'DM - Urbano', "Massas d'água"))
                 
 
     with colB2:
@@ -232,9 +229,30 @@ def parametros():
                 Map.addLayer(RCEN_detect, name= 'DM - RCEN')
 
             if 'Área de interesse' in layers:
-                Map.addLayer(geometria, {'color': '#CD5C5C'},name= 'Área de interesse')
+                vis_params_area = {
+                        'color': '#FFA500', 
+                        'pointSize': 3,
+                        'pointShape': 'circle',
+                        'width': 2,
+                        'lineType': 'dotted',
+                        'fillColor': '00000000',}
+                area_interesse = ee.FeatureCollection(geometria)
+                Map.addLayer(area_interesse.style(**vis_params_area), {}, 'Área de interesse')
+                
+            if "Massas d'água" in layers:
+                massa_dagua = ee.FeatureCollection("projects/projetofinal-340114/assets/Massa_dagua") # Adicionar shp de diretorio do gee
+                vis_params = {
+                        'color': '#4169E1', 
+                        'pointSize': 3,
+                        'pointShape': 'circle',
+                        'width': 2,
+                        'lineType': 'dotted',
+                        'fillColor': '00000000',}
+                Map.addLayer(massa_dagua.style(**vis_params), {}, "Massas d'água")
             
-        
+
+
+
         Map.addLayerControl()
         folium_static(Map, width=800, height=600)
         texto = """<h6  style='text-align: justify; color: #31333F;'>
