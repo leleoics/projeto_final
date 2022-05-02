@@ -67,6 +67,7 @@ def inicio():
         st.image(urbano, use_column_width=True)
         with st.expander('Saber mais', ):
             st.markdown("Técnica de detecção por (RCEN)")
+            st.video('https://youtu.be/2oxlqsuaRBo')
 
     st.markdown("""<p  style='text-align: justify; color: #31333F;'>
     <b>  </b> </p>""", unsafe_allow_html=True)
@@ -106,26 +107,26 @@ def inicio():
     with st.expander('Ver mais'):
         col21, col22 = st.columns([1, 1])
         with col21:
-            st.markdown("""<h6  style='text-align: center; color: #31333F;'>
-            <b>Título 1</b>
-        </h6>""", unsafe_allow_html=True)
-            st.video('https://youtu.be/Tot280Elbck')
+            st.markdown("""<h5  style='text-align: center; color: #31333F;'>
+            <b>Exemplo de uso da aplicação - Reservatório de água do Iraí no Paraná</b>
+        </h5>""", unsafe_allow_html=True)
+            st.video('https://youtu.be/3QxgN4vBQVg')
 
-            st.markdown("""<h6  style='text-align: center; color: #31333F;'>
-            <b>Título 3</b>
-        </h6>""", unsafe_allow_html=True)
+            st.markdown("""<h5  style='text-align: center; color: #31333F;'>
+            <b>Técnica de detecção de mudança por diferença de NDWI</b>
+        </h5>""", unsafe_allow_html=True)
             st.video('https://youtu.be/Tot280Elbck')
 
         with col22:
-            st.markdown("""<h6  style='text-align: center; color: #31333F;'>
-           <b>Título 2</b>
-        </h6>""", unsafe_allow_html=True)
-            st.video('https://youtu.be/Tot280Elbck')
+            st.markdown("""<h5  style='text-align: center; color: #31333F;'>
+           <b>Técnica de detecção de mudança por diferença de NDVI</b>
+        </h5>""", unsafe_allow_html=True)
+            st.video('https://youtu.be/Vv09DKTAI20')
 
-            st.markdown("""<h6  style='text-align: center; color: #31333F;'>
-            <b>Título 4</b>
-        </h6>""", unsafe_allow_html=True)
-            st.video('https://youtu.be/Tot280Elbck')
+            st.markdown("""<h5  style='text-align: center; color: #31333F;'>
+            <b>Técnica de detecção de mudança por RCEN</b>
+        </h5>""", unsafe_allow_html=True)
+            st.video('https://youtu.be/2oxlqsuaRBo')
 
 
 
